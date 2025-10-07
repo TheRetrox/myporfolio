@@ -299,7 +299,9 @@
         const scoreShow = document.querySelector('.score');
         const scoreShow2 = document.querySelector('.score2');
         const gameOverShow = document.querySelector('.gameover');
-let press = true;
+
+
+        let press = true;
         let gamest = false;
         let pipe = false;
         let a = 0;
@@ -397,28 +399,24 @@ let press = true;
         function gameOver() {
             if (p1.y >= board.clientHeight - p1character.clientHeight) {
                 gamest = false;
-press = false;
                 p1.rotate = false;
                 new Audio('sfx_die.wav').play();
                 gameOverPopup();
             }
             if (p1.y <= 0) {
                 gamest = false;
-press = false;
                 p1.rotate = false;
                 new Audio('sfx_die.wav').play();
                 gameOverPopup();
             }
             if (p1.y <= PipesPo.pipe1 && p1.x >= PipesPo.pipeX - p1character.clientHeight && p1.x <= PipesPo.pipeX + topPipe.clientWidth) {
                 gamest = false;
-press = false;
                 p1.rotate = false;
                 new Audio('sfx_hit.wav').play();
                 gameOverPopup();
             }
             if (p1.y >= PipesPo.pipe1 + PipesPo.gap - p1character.clientHeight && p1.x >= PipesPo.pipeX - p1character.clientHeight && p1.x <= PipesPo.pipeX + topPipe.clientWidth) {
                 gamest = false;
-press = false;
                 p1.rotate = false;
                 new Audio('sfx_hit.wav').play();
                 gameOverPopup();
@@ -433,6 +431,7 @@ press = false;
         }
 
         function gameOverPopup() {
+            press = false;
             gameOverShow.style.display = "flex";
             p1character.style.display = "none";
             topPipe.style.display = "none";
@@ -472,19 +471,21 @@ press = false;
             location.reload();
         }
 
-       if(press){
-board.addEventListener("click", event => {
-            if (!gamest) {
-                gamest = true;
-                p1.rotate = true;
-            }
-            gravity.velocity = -p1.jumpPower * ratio; // Responsive jump power
-            p1.angle = -45;
-            new Audio('flappy_whoosh.mp3').play();
-        });
-} 
+     
+            board.addEventListener("click", event => {
+                if(press){
+                    if (!gamest) {
+                        gamest = true;
+                        p1.rotate = true;
+                    }
+                    gravity.velocity = -p1.jumpPower * ratio; // Responsive jump power
+                    p1.angle = -45;
+                    new Audio('flappy_whoosh.mp3').play();
+                }
+            });
+        
 
-      
+        
         // Handle window resize
         window.addEventListener('resize', initGame);
 
@@ -494,6 +495,6 @@ board.addEventListener("click", event => {
     </script>
 </body>
 
-
 </html>
+
 
