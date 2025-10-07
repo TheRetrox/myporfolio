@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FlappyBird</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgb(120, 238, 197), rgb(71, 163, 202));
+            z-index: -1;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(230, 230, 230, 0.424), transparent);
+            animation: bg-animation 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes bg-animation {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .b-container {
+            background-color: rgba(190, 202, 213, 0.516);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border: 2px solid white;
+            box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.741);
+            max-width: 95vw;
+            max-height: 95vh;
+            padding: 10px;
+        }
+
+        .b-container .logo {
+            width: 40%;
+            height: 50px;
+            background-image: url('image/logo.svg');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin: 15px;
+        }
+
+        .gameover {
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: rgba(31, 31, 31, 0.558);
+            z-index: 10;
+            animation: op 0.2s ease-in;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px;
+        }
+
+        @keyframes op {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .gameover h1 {
+            color: rgb(255, 86, 86);
+            font-size: 50px;
+            margin: 30px;
+            text-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
+            z-index: 99;
+        }
+
+        .score {
+            font-size: 30px;
+            font-family: monospace;
+            margin: 15px;
+            z-index: 99;
+            color: aliceblue;
+        }
+
+        .score2 {
+            font-size: 30px;
+            font-family: monospace;
+            margin: 30px;
+            z-index: 99;
+            color: aliceblue;
+        }
+
+        .playagain {
+            width: 200px;
+            height: 50px;
+            font-size: 30px;
+            color: aliceblue;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(37, 37, 37, 0.709);
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .board {
+            width: 90vmin;
+            height: 90vmin;
+            max-width: 500px;
+            max-height: 500px;
+            overflow: hidden;
+            background-image: url('image/flappybirdbg.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: repeat-x;
+            position: relative;
+            border-radius: 10px;
+            margin: 10px;
+            border: 2px solid white;
+        }
+
+        .character {
+            width: 14%;
+            height: 12%;
+            position: absolute;
+            background-image: url('image/flappybird.png');
+            background-position: center;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .pipeTop {
+            width: 16%;
+            height: 800px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 2px solid black;
+            border-bottom: none;
+            border-top: none;
+            background-image: linear-gradient(to top, rgb(89, 163, 89), rgb(80, 200, 120));
+        }
+
+        .pipeTop::before {
+            content: '';
+            width: 125%;
+            height: 30px;
+            border: 2px solid black;
+            background-image: linear-gradient(to top, rgb(89, 163, 89), rgb(80, 200, 120));
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        .pipeBottom {
+            width: 16%;
+            height: 800px;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(to top, rgb(89, 163, 89), rgb(80, 200, 120));
+            border: 2px solid black;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .pipeBottom::before {
+            content: '';
+            width: 125%;
+            height: 30px;
+            border: 2px solid black;
+            background-image: linear-gradient(to top, rgb(89, 163, 89), rgb(80, 200, 120));
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 500px) {
+            .b-container {
+                padding: 5px;
+            }
+
+            .b-container .logo {
+                height: 40px;
+                margin: 10px;
+            }
+
+            .score {
+                font-size: 24px;
+                margin: 10px;
+            }
+
+            .gameover h1 {
+                font-size: 40px;
+                margin: 20px;
+            }
+
+            .score2 {
+                font-size: 24px;
+                margin: 20px;
+            }
+
+            .playagain {
+                width: 180px;
+                height: 45px;
+                font-size: 24px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .b-container .logo {
+                height: 30px;
+                margin: 5px;
+            }
+
+            .score {
+                font-size: 20px;
+                margin: 5px;
+            }
+
+            .board {
+                margin: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="animated-bg"></div>
+
+    <div class="b-container">
+        <div class="logo"></div>
+        <div class="score">Score: 0</div>
+
+        <div class="board">
+            <div class="gameover">
+                <h1>Game Over</h1>
+                <div class="score2">Score: 0</div>
+                <div class="playagain" onclick="playa()">Play again</div>
+            </div>
+
+            <div class="character"></div>
+            <div class="pipeTop"></div>
+            <div class="pipeBottom"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const p1character = document.querySelector('.character');
+        const board = document.querySelector('.board');
+        const topPipe = document.querySelector('.pipeTop');
+        const bottomPipe = document.querySelector('.pipeBottom');
+        const scoreShow = document.querySelector('.score');
+        const scoreShow2 = document.querySelector('.score2');
+        const gameOverShow = document.querySelector('.gameover');
+
+        let gamest = false;
+        let pipe = false;
+        let a = 0;
+        let mainScore = 0;
+        let ratio = 1; // For responsive scaling
+
+        // Calculate responsive ratio
+        function calculateRatio() {
+            const boardWidth = board.clientWidth;
+            ratio = boardWidth / 500; // 500 is the original width
+        }
+
+        let p1 = {
+            x: 0,
+            y: 0,
+            joind: true,
+            jumpPower: 6,
+            fall: true,
+            goup: false,
+            angle: 0,
+            rotate: false,
+            scored: false
+        }
+
+        let PipesPo = {
+            pipeX: 0,
+            pipeY: 0,
+            pipe1: 0,
+            pipe2: 0,
+            gap: 0,
+        }
+
+        let gravity = {
+            velocity: 0,
+            bounceFactor: 0.9,
+            g: 0.2,
+        }
+
+        // Initialize game
+        function initGame() {
+            calculateRatio();
+
+            p1.x = board.clientWidth / 4 - p1character.clientHeight;
+            p1.y = board.clientHeight / 2 - p1character.clientHeight / 2;
+            PipesPo.pipeX = board.clientWidth;
+
+            // Update character position
+            p1character.style.top = p1.y + "px";
+            p1character.style.left = p1.x + "px";
+
+            // Update pipe positions
+            topPipe.style.left = PipesPo.pipeX + "px";
+            bottomPipe.style.left = PipesPo.pipeX + "px";
+        }
+
+        gameloop = () => {
+
+            scoreShow.innerText = `Score: ${mainScore}`;
+            scoreShow2.innerText = `Score: ${mainScore}`;
+
+            // Animated background
+            a -= 0.5;
+            board.style.backgroundPosition = `${a}px`;
+
+            if (p1.rotate) {
+                p1.angle += 0.5;
+                p1character.style.transform = `rotateZ(${p1.angle}deg)`;
+                if (p1.angle > 60) {
+                    p1.angle = 60;
+                }
+            }
+
+            if (p1.joind) {
+                p1character.style.top = p1.y + "px";
+                p1character.style.left = p1.x + "px";
+                topPipe.style.left = PipesPo.pipeX + "px";
+                bottomPipe.style.left = PipesPo.pipeX + "px";
+            }
+
+            if (gamest) {
+                addPipes();
+                applyGravity();
+                gameOver();
+            }
+            requestAnimationFrame(gameloop);
+        }
+
+        function applyGravity() {
+            if (p1.fall) {
+                p1.y += gravity.velocity;
+                gravity.velocity += gravity.g;
+            }
+        }
+
+        function gameOver() {
+            if (p1.y >= board.clientHeight - p1character.clientHeight) {
+                gamest = false;
+                p1.rotate = false;
+                new Audio('sfx_die.wav').play();
+                gameOverPopup();
+            }
+            if (p1.y <= 0) {
+                gamest = false;
+                p1.rotate = false;
+                new Audio('sfx_die.wav').play();
+                gameOverPopup();
+            }
+            if (p1.y <= PipesPo.pipe1 && p1.x >= PipesPo.pipeX - p1character.clientHeight && p1.x <= PipesPo.pipeX + topPipe.clientWidth) {
+                gamest = false;
+                p1.rotate = false;
+                new Audio('sfx_hit.wav').play();
+                gameOverPopup();
+            }
+            if (p1.y >= PipesPo.pipe1 + PipesPo.gap - p1character.clientHeight && p1.x >= PipesPo.pipeX - p1character.clientHeight && p1.x <= PipesPo.pipeX + topPipe.clientWidth) {
+                gamest = false;
+                p1.rotate = false;
+                new Audio('sfx_hit.wav').play();
+                gameOverPopup();
+            }
+            // Bird passes the pipe safely (center point)
+            if (!p1.scored && p1.x > PipesPo.pipeX + topPipe.clientWidth) {
+                mainScore++;
+                new Audio('scoresound.mp3').play();
+                p1.scored = true; // prevents multiple scoring per pipe
+            }
+
+        }
+
+        function gameOverPopup() {
+            gameOverShow.style.display = "flex";
+            p1character.style.display = "none";
+            topPipe.style.display = "none";
+            bottomPipe.style.display = "none";
+        }
+
+        function addPipes() {
+            const gap = 230 * ratio; // Responsive gap size
+            PipesPo.gap = gap;
+
+            if (!pipe) {
+                // Random height for top pipe within valid range
+                let topHeight = Math.random() * (board.clientHeight - gap - 100) + 50;
+                let bottomHeight = board.clientHeight - topHeight - gap;
+                topPipe.style.height = topHeight + "px";
+                bottomPipe.style.height = bottomHeight + "px";
+                PipesPo.pipe1 = topHeight;
+                PipesPo.pipe2 = bottomHeight;
+                pipe = true;
+                p1.scored = false;
+
+            }
+
+            // Move pipes
+            PipesPo.pipeX -= 2 * ratio; // Responsive pipe speed
+
+            if (PipesPo.pipeX <= -topPipe.clientWidth) {
+                PipesPo.pipeX = board.clientWidth;
+                pipe = false;
+            }
+
+            topPipe.style.left = PipesPo.pipeX + "px";
+            bottomPipe.style.left = PipesPo.pipeX + "px";
+        }
+
+        function playa() {
+            location.reload();
+        }
+
+        board.addEventListener("click", event => {
+            if (!gamest) {
+                gamest = true;
+                p1.rotate = true;
+            }
+            gravity.velocity = -p1.jumpPower * ratio; // Responsive jump power
+            p1.angle = -45;
+            new Audio('flappy_whoosh.mp3').play();
+        });
+
+        board.addEventListener('touchstart', () => {
+            if (!gamest) {
+                gamest = true;
+                p1.rotate = true;
+            }
+            gravity.velocity = -p1.jumpPower * ratio; // Responsive jump power
+            p1.angle = -45;
+            new Audio('flappy_whoosh.mp3').play();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', initGame);
+
+        // Initialize the game
+        initGame();
+        requestAnimationFrame(gameloop);
+    </script>
+</body>
+
+</html>
