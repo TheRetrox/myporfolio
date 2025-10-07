@@ -397,24 +397,28 @@ let press = true;
         function gameOver() {
             if (p1.y >= board.clientHeight - p1character.clientHeight) {
                 gamest = false;
+press = false;
                 p1.rotate = false;
                 new Audio('sfx_die.wav').play();
                 gameOverPopup();
             }
             if (p1.y <= 0) {
                 gamest = false;
+press = false;
                 p1.rotate = false;
                 new Audio('sfx_die.wav').play();
                 gameOverPopup();
             }
             if (p1.y <= PipesPo.pipe1 && p1.x >= PipesPo.pipeX - p1character.clientHeight && p1.x <= PipesPo.pipeX + topPipe.clientWidth) {
                 gamest = false;
+press = false;
                 p1.rotate = false;
                 new Audio('sfx_hit.wav').play();
                 gameOverPopup();
             }
             if (p1.y >= PipesPo.pipe1 + PipesPo.gap - p1character.clientHeight && p1.x >= PipesPo.pipeX - p1character.clientHeight && p1.x <= PipesPo.pipeX + topPipe.clientWidth) {
                 gamest = false;
+press = false;
                 p1.rotate = false;
                 new Audio('sfx_hit.wav').play();
                 gameOverPopup();
@@ -429,7 +433,7 @@ let press = true;
         }
 
         function gameOverPopup() {
-           press = false; gameOverShow.style.display = "flex";
+            gameOverShow.style.display = "flex";
             p1character.style.display = "none";
             topPipe.style.display = "none";
             bottomPipe.style.display = "none";
