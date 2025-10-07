@@ -478,16 +478,7 @@
             new Audio('flappy_whoosh.mp3').play();
         });
 
-        board.addEventListener('touchstart', () => {
-            if (!gamest) {
-                gamest = true;
-                p1.rotate = true;
-            }
-            gravity.velocity = -p1.jumpPower * ratio; // Responsive jump power
-            p1.angle = -45;
-            new Audio('flappy_whoosh.mp3').play();
-        });
-
+      
         // Handle window resize
         window.addEventListener('resize', initGame);
 
@@ -496,5 +487,6 @@
         requestAnimationFrame(gameloop);
     </script>
 </body>
+
 
 </html>
