@@ -299,7 +299,7 @@
         const scoreShow = document.querySelector('.score');
         const scoreShow2 = document.querySelector('.score2');
         const gameOverShow = document.querySelector('.gameover');
-
+let press = true;
         let gamest = false;
         let pipe = false;
         let a = 0;
@@ -429,7 +429,7 @@
         }
 
         function gameOverPopup() {
-            gameOverShow.style.display = "flex";
+           press = false; gameOverShow.style.display = "flex";
             p1character.style.display = "none";
             topPipe.style.display = "none";
             bottomPipe.style.display = "none";
@@ -468,7 +468,8 @@
             location.reload();
         }
 
-        board.addEventListener("click", event => {
+       if(press){
+board.addEventListener("click", event => {
             if (!gamest) {
                 gamest = true;
                 p1.rotate = true;
@@ -477,6 +478,7 @@
             p1.angle = -45;
             new Audio('flappy_whoosh.mp3').play();
         });
+} 
 
       
         // Handle window resize
