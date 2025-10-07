@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Balls Physics Simulation</title>
+   <style>
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: cursive;
+ }
+
+ body {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     min-height: 100vh;
+     background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+     color: white;
+     padding: 20px;
+     overflow-x: hidden;
+ }
+
+ header {
+     width: 100%;
+     max-width: 800px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+ }
+
+ h1 {
+     font-size: 2.5rem;
+     margin-bottom: 10px;
+     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+ }
+
+ p {
+     font-size: 1.1rem;
+     margin-bottom: 20px;
+     text-align: center;
+     max-width: 600px;
+ }
+
+ .controls {
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     gap: 20px;
+     margin-bottom: 20px;
+     width: 100%;
+     max-width: 800px;
+ }
+
+ .control-group {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     background: rgba(255, 255, 255, 0.1);
+     padding: 15px;
+     border-radius: 10px;
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.2);
+     min-width: 150px;
+ }
+
+ label {
+     margin-bottom: 8px;
+     font-weight: 600;
+ }
+
+ input {
+     width: 100%;
+     padding: 8px;
+     border-radius: 5px;
+     border: none;
+     background: rgba(255, 255, 255, 0.9);
+     text-align: center;
+     font-size: 1rem;
+ }
+
+ .board {
+     height: 60vh;
+     width: 90%;
+     max-width: 800px;
+     border: 3px solid rgba(255, 255, 255, 0.3);
+     border-radius: 15px;
+     background: rgba(0, 0, 0, 0.2);
+     position: relative;
+     overflow: hidden;
+     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+ }
+
+ .newItemz {
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     position: absolute;
+     top: 0px;
+     left: 0px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+     transition: transform 0.1s;
+ }
+
+ .newItemz:hover {
+     transform: scale(1.1);
+     cursor: pointer;
+ }
+
+ .stats {
+     display: flex;
+     justify-content: space-around;
+     width: 90%;
+     max-width: 800px;
+     margin-top: 20px;
+     background: rgba(255, 255, 255, 0.1);
+     padding: 15px;
+     border-radius: 10px;
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.2);
+ }
+
+ .stat-item {
+     text-align: center;
+ }
+
+ .stat-value {
+     font-size: 1.5rem;
+     font-weight: bold;
+     color: #ffcc00;
+ }
+
+ footer {
+     margin-top: 20px;
+     text-align: center;
+     font-size: 0.9rem;
+     opacity: 0.8;
+ }
+
+ /* Animation for new balls */
+ @keyframes pulse {
+     0% {
+         transform: scale(0.8);
+         opacity: 0.7;
+     }
+
+     50% {
+         transform: scale(1.1);
+         opacity: 1;
+     }
+
+     100% {
+         transform: scale(1);
+         opacity: 0.7;
+     }
+ }
+
+ .newItemz.added {
+     animation: pulse 0.5s ease-in-out;
+ }
+
+ /* Button styles */
+ .buttons {
+     display: flex;
+     gap: 10px;
+     margin-top: 10px;
+ }
+
+ button {
+     padding: 8px 15px;
+     border: none;
+     border-radius: 5px;
+     background: rgba(255, 255, 255, 0.2);
+     color: white;
+     cursor: pointer;
+     transition: all 0.3s;
+     backdrop-filter: blur(5px);
+     border: 1px solid rgba(255, 255, 255, 0.3);
+ }
+
+ button:hover {
+     background: rgba(255, 255, 255, 0.3);
+     transform: translateY(-2px);
+ }
+
+ /* Responsive design */
+ @media (max-width: 768px) {
+     h1 {
+         font-size: 2rem;
+     }
+
+     .board {
+         height: 50vh;
+         width: 95%;
+     }
+
+     .controls {
+         flex-direction: column;
+         align-items: center;
+     }
+
+     .control-group {
+         width: 100%;
+         max-width: 300px;
+     }
+
+     .stats {
+         flex-direction: column;
+         gap: 10px;
+     }
+ }
+
+ @media (max-width: 480px) {
+     h1 {
+         font-size: 1.8rem;
+     }
+
+     p {
+         font-size: 1rem;
+     }
+
+     .board {
+         height: 40vh;
+     }
+ }
+   </style>
+</head>
+
+<body>
+    <header>
+        <h1>Bouncing Balls Physics Simulation</h1>
+        <p>Click anywhere on the board to create bouncing balls. Adjust gravity and bounce factors to see different
+            physics behaviors.</p>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="gravity">Gravity (g):</label>
+            <input type="number" id="gravity" value="0.5" step="0.1" min="0.1" max="2">
+        </div>
+
+        <div class="control-group">
+            <label for="bounce">Bounce Factor (f):</label>
+            <input type="number" id="bounce" value="0.8" step="0.1" min="0.1" max="1">
+        </div>
+
+        <div class="control-group">
+            <label for="ballCount">Balls Count:</label>
+            <div class="stat-value" id="ballCount">0</div>
+            <div class="buttons">
+                <button id="clearBalls">Clear All</button>
+                <button id="addRandom">Add Random</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="board"></div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div>Active Balls</div>
+            <div class="stat-value" id="activeBalls">0</div>
+        </div>
+        <div class="stat-item">
+            <div>Max Velocity</div>
+            <div class="stat-value" id="maxVelocity">0</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Physics Simulation | Click to add balls | Adjust parameters for different effects</p>
+    </footer>
+
+    <script>
+        // ================== SETUP ==================
+        // Select the board 
+        let board = document.querySelector(".board");
+
+        // Set window height (playable area height)
+        let windowH = board.clientHeight;
+
+        // Get control elements
+        const gravityInput = document.getElementById("gravity");
+        const bounceInput = document.getElementById("bounce");
+        const ballCountElement = document.getElementById("ballCount");
+        const activeBallsElement = document.getElementById("activeBalls");
+        const maxVelocityElement = document.getElementById("maxVelocity");
+        const clearBallsButton = document.getElementById("clearBalls");
+        const addRandomButton = document.getElementById("addRandom");
+
+        // Initialize values from inputs
+        let g = parseFloat(gravityInput.value);
+        let f = parseFloat(bounceInput.value);
+
+        // Update values when inputs change
+        gravityInput.addEventListener("input", function () {
+            g = parseFloat(this.value);
+        });
+
+        bounceInput.addEventListener("input", function () {
+            f = parseFloat(this.value);
+        });
+
+        // Flags for falling/bouncing behavior
+        let fall = true;
+        let goUp = false;
+
+        // Tracks if at least one item is clicked/added
+        let clickd = false;
+
+        // Arrays to manage multiple items
+        let allitemz = [];     // Stores item elements
+        let allitemzY = [];    // Stores Y position of each item
+        let arrFall = [];      // Stores fall state (true = falling, false = bouncing up)
+        let arrvelo = [];      // Stores velocity of each item
+        let arrColors = [];    // Stores ball colors
+
+        // Statistics
+        let maxVelocity = 0;
+
+        // Color palette for balls
+        const colors = [
+            'radial-gradient(circle at 30% 30%, #ff9a9e, #fad0c4)',
+            'radial-gradient(circle at 30% 30%, #a1c4fd, #c2e9fb)',
+            'radial-gradient(circle at 30% 30%, #ffecd2, #fcb69f)',
+            'radial-gradient(circle at 30% 30%, #84fab0, #8fd3f4)',
+            'radial-gradient(circle at 30% 30%, #d4fc79, #96e6a1)',
+            'radial-gradient(circle at 30% 30%, #fbc2eb, #a6c1ee)',
+            'radial-gradient(circle at 30% 30%, #fdcbf1, #e6dee9)',
+            'radial-gradient(circle at 30% 30%, #e0c3fc, #8ec5fc)'
+        ];
+
+        // ================== GAME LOOP ==================
+        function gameloop() {
+            if (clickd == true) {
+                for (let i = 0; i < allitemz.length; i++) {
+                    let ay = allitemzY[i]; // Current Y position of item
+
+                    // If item is falling
+                    if (arrFall[i] == true) {
+                        arrvelo[i] += g;             // Increase velocity by gravity
+                        allitemzY[i] += arrvelo[i];  // Update Y position
+                    }
+
+                    // If item is going up (bounce)
+                    if (arrFall[i] == false) {
+                        arrvelo[i] = -arrvelo[i];    // Reverse velocity
+                        allitemzY[i] += arrvelo[i];  // Update Y position
+                    }
+
+                    // If velocity becomes zero or less, switch to falling
+                    if (arrvelo[i] <= 0) {
+                        arrFall[i] = true;
+                    }
+
+                    // If item touches bottom of window, switch to bounce (go up)
+                    if (allitemzY[i] >= windowH - 50) {
+                        allitemzY[i] = windowH - 50; // Keep inside boundary
+                        arrvelo[i] = arrvelo[i] * f; // Apply bounce factor
+                        arrFall[i] = false;          // Start bouncing upward
+                    }
+
+                    // Update max velocity
+                    if (Math.abs(arrvelo[i]) > maxVelocity) {
+                        maxVelocity = Math.abs(arrvelo[i]);
+                        maxVelocityElement.textContent = maxVelocity.toFixed(2);
+                    }
+
+                    // Apply updated Y position to item 
+                    allitemz[i].style.top = ay + "px";
+
+                    // Add visual effect based on velocity
+                    const velocityFactor = Math.min(Math.abs(arrvelo[i]) / 10, 1);
+                    allitemz[i].style.opacity = 0.7 + (velocityFactor * 0.3);
+
+                    // Add slight rotation based on movement
+                    allitemz[i].style.transform = `rotate(${ay / 5}deg) scale(${1 + velocityFactor * 0.1})`;
+                }
+
+                // Update active balls count
+                activeBallsElement.textContent = allitemz.length;
+            }
+
+            // Keep looping the game
+            requestAnimationFrame(gameloop);
+        }
+
+        // ================== CREATE BALL FUNCTION ==================
+        function createBall(x, y, randomColor = false) {
+            // Create a new div for the item
+            let newItem = document.createElement('div');
+            board.appendChild(newItem);
+            newItem.classList.add("newItemz");
+
+            // Center item around coordinates
+            let h = newItem.clientHeight;
+            newItem.style.top = (y - h / 2) + "px";
+            newItem.style.left = (x - h / 2) + "px";
+
+            // Assign a random color from the palette
+            const colorIndex = randomColor ? Math.floor(Math.random() * colors.length) :
+                (allitemz.length % colors.length);
+            const ballColor = colors[colorIndex];
+            newItem.style.background = ballColor;
+
+            // Add visual effect for new ball
+            newItem.classList.add("added");
+            setTimeout(() => {
+                newItem.classList.remove("added");
+            }, 500);
+
+            // Mark that at least one item is active
+            clickd = true;
+
+            // Store item properties in arrays
+            allitemz.push(newItem);
+            allitemzY.push(y - h / 2);
+            arrFall.push(true); // Start falling
+            arrvelo.push(0);    // Initial velocity
+            arrColors.push(ballColor);
+
+            // Update ball count
+            ballCountElement.textContent = allitemz.length;
+        }
+
+        // ================== EVENT HANDLERS ==================
+        // On mouse click, create a new bouncing item
+        board.addEventListener("click", (e) => {
+            let rect = board.getBoundingClientRect();
+            let mx = e.clientX - rect.left; // Mouse X position relative to board
+            let my = e.clientY - rect.top;  // Mouse Y position relative to board
+
+            createBall(mx, my);
+        });
+
+        // Clear all balls
+        clearBallsButton.addEventListener("click", () => {
+            // Remove all ball elements from DOM
+            allitemz.forEach(ball => {
+                ball.remove();
+            });
+
+            // Reset arrays
+            allitemz = [];
+            allitemzY = [];
+            arrFall = [];
+            arrvelo = [];
+            arrColors = [];
+
+            // Reset statistics
+            ballCountElement.textContent = "0";
+            activeBallsElement.textContent = "0";
+            maxVelocityElement.textContent = "0";
+            maxVelocity = 0;
+
+            // Reset flag
+            clickd = false;
+        });
+
+        // Add random balls
+        addRandomButton.addEventListener("click", () => {
+            for (let i = 0; i < 5; i++) {
+                const x = Math.random() * (board.clientWidth - 50) + 25;
+                const y = Math.random() * (board.clientHeight / 2);
+                createBall(x, y, true);
+            }
+        });
+
+        // ================== RESIZE HANDLER ==================
+        // Adjust board height on window resize
+        window.addEventListener("resize", function () {
+            windowH = board.clientHeight;
+
+            // Reposition balls if they're outside the new boundaries
+            for (let i = 0; i < allitemzY.length; i++) {
+                if (allitemzY[i] > windowH - 50) {
+                    allitemzY[i] = windowH - 50;
+                }
+            }
+        });
+
+        // ================== START ==================
+        // Begin the animation loop
+        requestAnimationFrame(gameloop);
+    </script>
+</body>
+
+</html>
