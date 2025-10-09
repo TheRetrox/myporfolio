@@ -209,7 +209,7 @@
         /* Touch Controls */
         .touch-controls {
             position: absolute;
-            bottom: 20px;
+            bottom: 50px;
             left: 0;
             width: 100%;
             display: none;
@@ -217,20 +217,6 @@
             padding: 0 20px;
             box-sizing: border-box;
             z-index: 5;
-        }
-
-        .touch-area {
-            width: 150px;
-            height: 150px;
-            background-color: rgba(255, 51, 51, 0.2);
-            border: 2px solid rgba(255, 51, 51, 0.5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ff3333;
-            font-weight: bold;
-            touch-action: none;
         }
 
         .shoot-button {
@@ -322,10 +308,9 @@
             
             .touch-controls {
                 display: flex;
-                bottom: max(20px, env(safe-area-inset-bottom));
             }
             
-            .touch-area, .joystick {
+            .joystick {
                 width: 120px;
                 height: 120px;
             }
@@ -394,12 +379,7 @@
                 width: 70%;
             }
             
-            .touch-controls {
-                display: flex;
-                bottom: max(20px, env(safe-area-inset-bottom));
-            }
-            
-            .touch-area, .joystick {
+            .joystick {
                 width: 100px;
                 height: 100px;
             }
@@ -460,13 +440,8 @@
         // ================== GAME STATE ==================
         let gameActive = false;
         let score = 0;
+        let setint; // Enemy spawn interval
         
-        // ================== SETUP ==================
-
-        // Background music & sounds
-        const bgm = new Audio('audio/8GALS.ogg');
-        const explode = new Audio('audio/explode-trimed.wav');
-
         // Game board
         let body = document.body;
         let board = document.querySelector(".board");
@@ -475,25 +450,24 @@
         // Player settings
         let velo = 5; // Ship speed
         let p1 = {
-            x: 0,   // Will be set properly in initGame
-            y: 0,   // Will be set properly in initGame
-            joind: false,                       // True when ship exists
+            x: 0,
+            y: 0,
+            joind: false,
             up: false, down: false,
             left: false, right: false,
         };
 
         // Player bullets
-        let p1ShipBullets = []; // Bullet DOM elements
-        let p1ShipB = [];       // Bullet positions {x, y}
+        let p1ShipBullets = [];
+        let p1ShipB = [];
 
-        // Player ship(s)
+        // Player ship
         let ships = [];
 
-        // Enemies: arrays for elements, positions, and health
+        // Enemies
         let arrEnemyOne = [], arrEnemyOneP = [], enmy1H = [];
         let arrEnemyTwo = [], arrEnemyTwoP = [], enmy2H = [];
-        let arrEnemythree = [], arrEnemythreeP = [], enmy3H = [];
-        let arrEnemyfour = [], arrEnemyfourP = [], enmy4H = [];
+        let arrEnemyFour = [], arrEnemyFourP = [], enmy4H = [];
         let bossOne = [], bossOnep = [], bossOneH = [];
 
         let enemykilld = 0; // Enemy kill counter
@@ -513,8 +487,6 @@
 
         // ================== TOUCH CONTROLS ==================
         let joystickActive = false;
-        let joystickStartX = 0;
-        let joystickStartY = 0;
         let joystickCenterX = 0;
         let joystickCenterY = 0;
         
@@ -531,10 +503,6 @@
             e.preventDefault();
             joystickActive = true;
             initJoystick();
-            
-            const touch = e.touches[0];
-            joystickStartX = touch.clientX;
-            joystickStartY = touch.clientY;
             
             // Reset movement
             p1.up = p1.down = p1.left = p1.right = false;
@@ -564,27 +532,22 @@
             joystickHandle.style.transform = `translate(${handleX}px, ${handleY}px)`;
             
             // Set movement based on direction
-            const threshold = 20; // Minimum distance to register movement
+            const threshold = 20;
             
             // Reset all directions
             p1.up = p1.down = p1.left = p1.right = false;
             
             if (Math.abs(deltaX) > threshold || Math.abs(deltaY) > threshold) {
-                // Determine primary direction (prioritize diagonal movement)
                 if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                    // Horizontal movement is stronger
                     if (deltaX < -threshold) p1.left = true;
                     if (deltaX > threshold) p1.right = true;
                     
-                    // Add vertical component if significant
                     if (deltaY < -threshold/2) p1.up = true;
                     if (deltaY > threshold/2) p1.down = true;
                 } else {
-                    // Vertical movement is stronger
                     if (deltaY < -threshold) p1.up = true;
                     if (deltaY > threshold) p1.down = true;
                     
-                    // Add horizontal component if significant
                     if (deltaX < -threshold/2) p1.left = true;
                     if (deltaX > threshold/2) p1.right = true;
                 }
@@ -670,13 +633,12 @@
             p1ShipB = [];
             
             // Remove all enemies
-            [arrEnemyOne, arrEnemyTwo, arrEnemythree, arrEnemyfour, bossOne].forEach(enemyArray => {
+            [arrEnemyOne, arrEnemyTwo, arrEnemyFour, bossOne].forEach(enemyArray => {
                 enemyArray.forEach(enemy => enemy.remove());
             });
             arrEnemyOne = []; arrEnemyOneP = []; enmy1H = [];
             arrEnemyTwo = []; arrEnemyTwoP = []; enmy2H = [];
-            arrEnemythree = []; arrEnemythreeP = []; enmy3H = [];
-            arrEnemyfour = []; arrEnemyfourP = []; enmy4H = [];
+            arrEnemyFour = []; arrEnemyFourP = []; enmy4H = [];
             bossOne = []; bossOnep = []; bossOneH = [];
             
             // Remove player ship
@@ -690,30 +652,31 @@
 
         function gameOver() {
             gameActive = false;
-            clearInterval(setint);
+            if (setint) clearInterval(setint);
             finalScoreDisplay.textContent = score;
             gameOverScreen.style.display = 'flex';
+            
+            // Reset player controls
+            p1.up = p1.down = p1.left = p1.right = false;
         }
 
         // ================== ENEMY SPAWN LOOP ==================
-        let setint;
         function startEnemySpawning() {
             setint = setInterval(() => {
                 if (!gameActive) return;
                 
-                let randomEenemy = Math.ceil(Math.random() * 4); // Random enemy (1–4)
+                let randomEenemy = Math.ceil(Math.random() * 4);
 
                 // Enemy sprites
                 let enemy1 = "image/enmy-1.png";
                 let enemy2 = "image/enmy-2.png";
-                let enemy3 = "image/enmy-3.png";
                 let enemy4 = "image/enmy-4.png";
                 let boss1 = "image/red-boss.png";
 
                 // Spawn boss after kills
                 if (enemykilld >= 5) {
                     createEnmy(400, boss1, bossOne, bossOnep, bossOneH, 100, true, 500);
-                    clearInterval(setint); // Stop normal spawns
+                    clearInterval(setint);
                 }
 
                 // Random spawn logic
@@ -727,15 +690,8 @@
                 if (randomEenemy === 2) {
                     createEnmy(90, enemy2, arrEnemyTwo, arrEnemyTwoP, enmy2H, 90);
                 }
-                if (randomEenemy === 3) {
-                    if (arrEnemythree.length >= 2) {
-                        createEnmy(60, enemy4, arrEnemyfour, arrEnemyfourP, enmy4H, 60);
-                    } else {
-                        createEnmy(100, enemy3, arrEnemythree, arrEnemythreeP, enmy3H, 100);
-                    }
-                }
-                if (randomEenemy === 4) {
-                    createEnmy(60, enemy4, arrEnemyfour, arrEnemyfourP, enmy4H, 60);
+                if (randomEenemy === 3 || randomEenemy === 4) {
+                    createEnmy(60, enemy4, arrEnemyFour, arrEnemyFourP, enmy4H, 60);
                 }
             }, 1500);
         }
@@ -783,27 +739,23 @@
                 }
             }
 
-            // Enemy bullets (WIP)
-            enemyBullets();
-
             // Bullet vs Enemy collision
             Colide(p1ShipB, arrEnemyOne, arrEnemyOneP, enmy1H);
             Colide(p1ShipB, arrEnemyTwo, arrEnemyTwoP, enmy2H);
-            Colide(p1ShipB, arrEnemythree, arrEnemythreeP, enmy3H);
-            Colide(p1ShipB, arrEnemyfour, arrEnemyfourP, enmy4H);
+            Colide(p1ShipB, arrEnemyFour, arrEnemyFourP, enmy4H);
             Colide(p1ShipB, bossOne, bossOnep, bossOneH);
 
-            // Player vs Enemy collision
-            shipColide(arrEnemyOne, arrEnemyOneP, enmy1H);
-            shipColide(arrEnemyTwo, arrEnemyTwoP, enmy2H);
-            shipColide(arrEnemythree, arrEnemythreeP, enmy3H);
-            shipColide(arrEnemyfour, arrEnemyfourP, enmy4H);
+            // Player vs Enemy collision - FIXED: Check if ships[0] exists
+            if (ships.length > 0 && ships[0]) {
+                shipColide(arrEnemyOne, arrEnemyOneP, enmy1H);
+                shipColide(arrEnemyTwo, arrEnemyTwoP, enmy2H);
+                shipColide(arrEnemyFour, arrEnemyFourP, enmy4H);
+            }
 
             // Enemy movement/logic
             if (arrEnemyOne.length) enemyFunc(0.7, arrEnemyOne, arrEnemyOneP, false, enmy1H, false);
             if (arrEnemyTwo.length) enemyFunc(5, arrEnemyTwo, arrEnemyTwoP, false, enmy2H, false);
-            if (arrEnemythree.length) enemyFunc(0.7, arrEnemythree, arrEnemythreeP, false, enmy3H, false);
-            if (arrEnemyfour.length) enemyFunc(10, arrEnemyfour, arrEnemyfourP, true, enmy4H, false);
+            if (arrEnemyFour.length) enemyFunc(10, arrEnemyFour, arrEnemyFourP, true, enmy4H, false);
             if (bossOne.length) enemyFunc(0.7, bossOne, bossOnep, false, bossOneH, true);
 
             requestAnimationFrame(gameloop);
@@ -827,7 +779,7 @@
         document.addEventListener("keyup", event => {
             if (!gameActive) return;
             
-            if (event.key === "Enter") attk(p1.y, p1.x); // Shoot
+            if (event.key === "Enter") attk(p1.y, p1.x);
             if (event.key.startsWith("Arrow")) {
                 if (event.key === "ArrowUp") p1.up = false;
                 if (event.key === "ArrowDown") p1.down = false;
@@ -841,11 +793,6 @@
         restartButton.addEventListener("click", initGame);
 
         // ================== FUNCTIONS ==================
-
-        // Enemy bullets placeholder
-        function enemyBullets() {
-            // TODO: implement shooting enemies
-        }
 
         /**
          * Create player ship
@@ -883,7 +830,7 @@
         }
 
         /**
-         * Collision: bullets vs enemies - RESPONSIVE VERSION
+         * Collision: bullets vs enemies
          */
         function Colide(array, enemyArr, enemyPos, enemyHealth) {
             for (let i = array.length - 1; i >= 0; i--) {
@@ -949,9 +896,12 @@
         }
 
         /**
-         * Player vs Enemy collision - RESPONSIVE VERSION
+         * Player vs Enemy collision - FIXED: Check if ships[0] exists
          */
         function shipColide(enemyArr, enemyPos, enemyHealth) {
+            // Check if player ship exists
+            if (ships.length === 0 || !ships[0]) return;
+            
             for (let j = 0; j < enemyPos.length; j++) {
                 // Get actual enemy dimensions
                 const enemyRect = enemyArr[j].getBoundingClientRect();
@@ -997,7 +947,7 @@
         }
 
         /**
-         * Create enemy - RESPONSIVE VERSION
+         * Create enemy
          */
         function createEnmy(eh, im, array, arrayPos, enemyHealth, health, boss, ew) {
             // Calculate the board boundaries
@@ -1012,12 +962,10 @@
             // Get screen width for responsive sizing
             const screenWidth = window.innerWidth;
             if (screenWidth <= 768) {
-                // Scale down for tablets
                 adjustedEh = eh * 0.7;
                 if (adjustedEw) adjustedEw = ew * 0.7;
             }
             if (screenWidth <= 480) {
-                // Scale down further for mobile phones
                 adjustedEh = eh * 0.5;
                 if (adjustedEw) adjustedEw = ew * 0.5;
             }
@@ -1099,7 +1047,7 @@
         }
 
         /**
-         * Boss left-right movement - RESPONSIVE VERSION
+         * Boss left-right movement
          */
         let bossDir = true;
         function rlmove(array, arrayPos, i, speed) {
@@ -1130,3 +1078,4 @@
     </script>
 </body>
 </html>
+
