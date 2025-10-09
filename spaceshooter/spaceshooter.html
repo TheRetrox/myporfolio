@@ -209,11 +209,12 @@
         /* Touch Controls */
         .touch-controls {
             position: absolute;
-            bottom: 50px;
+            bottom: 70px;
             left: 0;
             width: 100%;
             display: none;
             justify-content: space-between;
+            align-items: center;
             padding: 0 20px;
             box-sizing: border-box;
             z-index: 5;
@@ -674,7 +675,7 @@
                 let boss1 = "image/red-boss.png";
 
                 // Spawn boss after kills
-                if (enemykilld >= 5) {
+                if (enemykilld >= 100) {
                     createEnmy(400, boss1, bossOne, bossOnep, bossOneH, 100, true, 500);
                     clearInterval(setint);
                 }
@@ -1075,7 +1076,11 @@
                 array[i].style.top = arrayPos[i].y + "px";
             }
         }
+
+
+        //Demo
     </script>
 </body>
 </html>
+
 
