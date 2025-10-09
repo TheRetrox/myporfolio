@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -323,6 +322,7 @@
             
             .touch-controls {
                 display: flex;
+                bottom: max(20px, env(safe-area-inset-bottom));
             }
             
             .touch-area, .joystick {
@@ -396,6 +396,7 @@
             
             .touch-controls {
                 display: flex;
+                bottom: max(20px, env(safe-area-inset-bottom));
             }
             
             .touch-area, .joystick {
@@ -711,7 +712,6 @@
 
                 // Spawn boss after kills
                 if (enemykilld >= 5) {
-                    console.log("Boss added");
                     createEnmy(400, boss1, bossOne, bossOnep, bossOneH, 100, true, 500);
                     clearInterval(setint); // Stop normal spawns
                 }
@@ -737,8 +737,6 @@
                 if (randomEenemy === 4) {
                     createEnmy(60, enemy4, arrEnemyfour, arrEnemyfourP, enmy4H, 60);
                 }
-
-                console.log("Enemy added");
             }, 1500);
         }
 
@@ -748,7 +746,7 @@
             
             // Background scroll
             m += 0.4;
-            board.style.backgroundPosition = `0px ${m}px`;
+            board.style.backgroundPosition = `50% ${m}px`;
 
             // Update player ship
             if (p1.joind && ships.length > 0) {
@@ -789,24 +787,24 @@
             enemyBullets();
 
             // Bullet vs Enemy collision
-            Colide(p1ShipB, arrEnemyOne, arrEnemyOneP, 100, enmy1H);
-            Colide(p1ShipB, arrEnemyTwo, arrEnemyTwoP, 80, enmy2H);
-            Colide(p1ShipB, arrEnemythree, arrEnemythreeP, 100, enmy3H);
-            Colide(p1ShipB, arrEnemyfour, arrEnemyfourP, 60, enmy4H);
-            Colide(p1ShipB, bossOne, bossOnep, 400, bossOneH);
+            Colide(p1ShipB, arrEnemyOne, arrEnemyOneP, enmy1H);
+            Colide(p1ShipB, arrEnemyTwo, arrEnemyTwoP, enmy2H);
+            Colide(p1ShipB, arrEnemythree, arrEnemythreeP, enmy3H);
+            Colide(p1ShipB, arrEnemyfour, arrEnemyfourP, enmy4H);
+            Colide(p1ShipB, bossOne, bossOnep, bossOneH);
 
             // Player vs Enemy collision
-            shipColide(arrEnemyOne, arrEnemyOneP, enmy1H, 100, 100);
-            shipColide(arrEnemyTwo, arrEnemyTwoP, enmy2H, 80, 80);
-            shipColide(arrEnemythree, arrEnemythreeP, enmy3H, 100, 100);
-            shipColide(arrEnemyfour, arrEnemyfourP, enmy4H, 60, 60);
+            shipColide(arrEnemyOne, arrEnemyOneP, enmy1H);
+            shipColide(arrEnemyTwo, arrEnemyTwoP, enmy2H);
+            shipColide(arrEnemythree, arrEnemythreeP, enmy3H);
+            shipColide(arrEnemyfour, arrEnemyfourP, enmy4H);
 
             // Enemy movement/logic
-            if (arrEnemyOne.length) enemyFunc(0.7, 100, arrEnemyOne, arrEnemyOneP, false, enmy1H, false);
-            if (arrEnemyTwo.length) enemyFunc(5, 90, arrEnemyTwo, arrEnemyTwoP, false, enmy2H, false);
-            if (arrEnemythree.length) enemyFunc(0.7, 100, arrEnemythree, arrEnemythreeP, false, enmy3H, false);
-            if (arrEnemyfour.length) enemyFunc(10, 60, arrEnemyfour, arrEnemyfourP, true, enmy4H, false);
-            if (bossOne.length) enemyFunc(0.7, 400, bossOne, bossOnep, false, bossOneH, true);
+            if (arrEnemyOne.length) enemyFunc(0.7, arrEnemyOne, arrEnemyOneP, false, enmy1H, false);
+            if (arrEnemyTwo.length) enemyFunc(5, arrEnemyTwo, arrEnemyTwoP, false, enmy2H, false);
+            if (arrEnemythree.length) enemyFunc(0.7, arrEnemythree, arrEnemythreeP, false, enmy3H, false);
+            if (arrEnemyfour.length) enemyFunc(10, arrEnemyfour, arrEnemyfourP, true, enmy4H, false);
+            if (bossOne.length) enemyFunc(0.7, bossOne, bossOnep, false, bossOneH, true);
 
             requestAnimationFrame(gameloop);
         }
@@ -885,15 +883,25 @@
         }
 
         /**
-         * Collision: bullets vs enemies
+         * Collision: bullets vs enemies - RESPONSIVE VERSION
          */
-        function Colide(array, enemyArr, enemyPos, eh, enemyHealth) {
+        function Colide(array, enemyArr, enemyPos, enemyHealth) {
             for (let i = array.length - 1; i >= 0; i--) {
                 for (let j = 0; j < enemyPos.length; j++) {
+                    // Get actual enemy dimensions
+                    const enemyRect = enemyArr[j].getBoundingClientRect();
+                    const enemyWidth = enemyRect.width;
+                    const enemyHeight = enemyRect.height;
+                    
+                    // Get bullet dimensions
+                    const bulletRect = p1ShipBullets[i].getBoundingClientRect();
+                    const bulletWidth = bulletRect.width;
+                    const bulletHeight = bulletRect.height;
+                    
                     if (
-                        array[i].y <= enemyPos[j].y + eh - 20 &&
+                        array[i].y <= enemyPos[j].y + enemyHeight &&
                         array[i].x >= enemyPos[j].x &&
-                        array[i].x <= enemyPos[j].x + eh &&
+                        array[i].x <= enemyPos[j].x + enemyWidth &&
                         array[i].y >= enemyPos[j].y
                     ) {
                         // Remove bullet
@@ -906,7 +914,7 @@
 
                         // Enemy destroyed
                         if (enemyHealth[j] <= 0) {
-                            createExplo(enemyArr, j, eh);
+                            createExplo(enemyArr, j, enemyWidth);
                             enemyArr[j].remove();
                             enemyArr.splice(j, 1);
                             enemyPos.splice(j, 1);
@@ -941,17 +949,27 @@
         }
 
         /**
-         * Player vs Enemy collision
+         * Player vs Enemy collision - RESPONSIVE VERSION
          */
-        function shipColide(enemyArr, enemyPos, enemyHealth, eh, ew) {
+        function shipColide(enemyArr, enemyPos, enemyHealth) {
             for (let j = 0; j < enemyPos.length; j++) {
+                // Get actual enemy dimensions
+                const enemyRect = enemyArr[j].getBoundingClientRect();
+                const enemyWidth = enemyRect.width;
+                const enemyHeight = enemyRect.height;
+                
+                // Get player dimensions
+                const playerRect = ships[0].getBoundingClientRect();
+                const playerWidth = playerRect.width;
+                const playerHeight = playerRect.height;
+                
                 if (
-                    p1.y <= enemyPos[j].y + eh &&
+                    p1.y <= enemyPos[j].y + enemyHeight &&
                     p1.x >= enemyPos[j].x &&
-                    p1.x <= enemyPos[j].x + ew &&
+                    p1.x <= enemyPos[j].x + enemyWidth &&
                     p1.y >= enemyPos[j].y
                 ) {
-                    createExplo(enemyArr, j, eh);
+                    createExplo(enemyArr, j, enemyWidth);
 
                     enemyArr[j].remove();
                     enemyArr.splice(j, 1);
@@ -979,7 +997,7 @@
         }
 
         /**
-         * Create enemy - FIXED VERSION
+         * Create enemy - RESPONSIVE VERSION
          */
         function createEnmy(eh, im, array, arrayPos, enemyHealth, health, boss, ew) {
             // Calculate the board boundaries
@@ -1033,10 +1051,10 @@
         /**
          * Enemy behavior / movement
          */
-        function enemyFunc(speed, eh, array, arrayPos, special, enemyHealth, boss) {
+        function enemyFunc(speed, array, arrayPos, special, enemyHealth, boss) {
             for (let i = array.length - 1; i >= 0; i--) {
                 if (special) specialenemy(array, arrayPos, i, speed);
-                if (boss) rlmove(array, arrayPos, i, speed, eh);
+                if (boss) rlmove(array, arrayPos, i, speed);
                 if (!boss && !special) {
                     arrayPos[i].y += speed;
                     array[i].style.top = arrayPos[i].y + "px";
@@ -1081,26 +1099,24 @@
         }
 
         /**
-         * Boss left-right movement - FIXED VERSION
+         * Boss left-right movement - RESPONSIVE VERSION
          */
         let bossDir = true;
-        function rlmove(array, arrayPos, i, speed, eh) {
+        function rlmove(array, arrayPos, i, speed) {
             const boardRect = board.getBoundingClientRect();
             const boardLeft = 0;
             const boardRight = boardRect.width;
             
-            // Adjust boss size for small screens
-            let adjustedEh = eh;
-            const screenWidth = window.innerWidth;
-            if (screenWidth <= 768) adjustedEh = eh * 0.7;
-            if (screenWidth <= 480) adjustedEh = eh * 0.5;
+            // Get actual boss dimensions
+            const bossRect = array[i].getBoundingClientRect();
+            const bossWidth = bossRect.width;
             
             if (arrayPos[i].y >= 0) {
                 if (bossDir) {
                     arrayPos[i].x += speed;
                     array[i].style.left = arrayPos[i].x + "px";
                 }
-                if (arrayPos[i].x + adjustedEh >= boardRight - 30) bossDir = false;
+                if (arrayPos[i].x + bossWidth >= boardRight - 30) bossDir = false;
                 if (arrayPos[i].x <= boardLeft + 30) bossDir = true;
                 if (!bossDir) {
                     arrayPos[i].x -= speed;
