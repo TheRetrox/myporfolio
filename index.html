@@ -14,7 +14,6 @@
             --transition: all 0.3s ease;
         }
 
-
         /* Dark Mode Colors (Default) */
         html.theme-default {
             --bg: #0b0b0c;
@@ -86,7 +85,6 @@
             --project-gradient: linear-gradient(45deg, #ff6b00, #ff9f1c);
             --project-overlay: linear-gradient(0deg, rgba(255, 107, 0, 0.9), rgba(255, 159, 28, 0.8));
         }
-
 
         /* Light Mode */
         html.lightMode {
@@ -232,10 +230,6 @@
             --project-overlay: linear-gradient(0deg, rgba(255, 46, 99, 0.9), rgba(8, 217, 214, 0.8));
         }
 
-
-
-
-
         * {
             margin: 0;
             padding: 0;
@@ -296,7 +290,6 @@
 
         .logo span {
             color: var(--accent1);
-            /* Removed text-shadow: 0 0 10px var(--accent1); */
         }
 
         .nav-links {
@@ -339,24 +332,20 @@
         }
 
         /* Theme Toggle in Nav */
-
-      .themeMore {
-    background: var(--card-bg);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    cursor: pointer;
-    box-shadow: 0 2px 10px var(--shadow-color);
-    color: var(--white);
-    font-size: 1rem;
-}
-
-
-
+        .themeMore {
+            background: var(--card-bg);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            cursor: pointer;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            color: var(--white);
+            font-size: 1rem;
+        }
 
         .menu-toggle {
             display: none;
@@ -373,14 +362,6 @@
             display: flex;
             align-items: center;
             padding: 100px 0 50px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .hero.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .hero-content {
@@ -393,17 +374,26 @@
         .hero-text h2 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
         }
 
         .hero-text h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
             color: var(--accent1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
         }
 
         .hero-text h3 {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.4s forwards;
         }
 
         .text {
@@ -414,11 +404,17 @@
             font-size: 1.1rem;
             margin-bottom: 2rem;
             color: var(--muted);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.6s forwards;
         }
 
         .social-links {
             display: flex;
             margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 0.8s forwards;
         }
 
         .social-icon {
@@ -456,6 +452,9 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease 1s forwards;
         }
 
         .btn::before {
@@ -494,7 +493,7 @@
             background-position: center;
             margin-bottom: 2rem;
             position: relative;
-            animation: pulse 2s infinite;
+            animation: pulse 2s infinite, fadeIn 1s ease forwards;
             box-shadow: 0 0 0 0px var(--accent1);
         }
 
@@ -502,7 +501,6 @@
             0% {
                 box-shadow: 0 0 0 0px var(--accent1);
             }
-
             100% {
                 box-shadow: 0 0 0 15px var(--pulse-start);
             }
@@ -533,14 +531,6 @@
         /* About Section */
         .section {
             padding: 100px 0;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease, transform 1s ease;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .section-title {
@@ -551,11 +541,13 @@
         .section-title h1 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .section-title span {
             color: var(--accent1);
-            /* Removed text-shadow: 0 0 10px var(--accent1); */
         }
 
         .about-content {
@@ -567,6 +559,9 @@
 
         .about-image {
             display: flex;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .about-img {
@@ -577,6 +572,12 @@
             background-size: cover;
             background-position: center;
             animation: pulse 2s infinite;
+        }
+
+        .about-text {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .about-text p {
@@ -599,6 +600,9 @@
             text-align: center;
             transition: var(--transition);
             border: 1px solid transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease, var(--transition);
         }
 
         .skill-card:hover {
@@ -632,6 +636,9 @@
             height: 300px;
             box-shadow: 0 5px 15px var(--shadow-color);
             background: var(--project-gradient);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease, var(--transition);
         }
 
         .project-image {
@@ -679,6 +686,9 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .skill-icon {
@@ -699,6 +709,8 @@
             border-radius: 5px;
             background: linear-gradient(45deg, var(--accent1), var(--accent2));
             position: relative;
+            width: 0;
+            transition: width 1.5s ease;
         }
 
         .skill-progress span {
@@ -721,10 +733,16 @@
             display: flex;
             flex-direction: column;
             width: 70%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .form-group input,
@@ -754,6 +772,9 @@
             overflow: hidden;
             z-index: 1;
             width: 200px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .sub-btn::before {
@@ -793,6 +814,9 @@
             flex-direction: column;
             justify-content: center;
             margin: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
 
         .contact-details {
@@ -878,6 +902,32 @@
         .overlay.active {
             opacity: 1;
             visibility: visible;
+        }
+
+        /* Animation Classes */
+        .animate {
+            opacity: 1 !important;
+            transform: translate(0, 0) !important;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         /* Responsive Styles */
@@ -989,7 +1039,6 @@
             .skill-card {
                 padding: 1rem;
             }
-
         }
 
         /* Extra Small Devices (220px and below) */
@@ -1324,7 +1373,6 @@
                     </div>
                 </div>
 
-
                 <div class="project-card">
                     <div class="project-image" style="background-image: url('img/flappybirdimg.png');"></div>
                     <div class="project-overlay">
@@ -1357,7 +1405,7 @@
                 <div class="skill-item">
                     <img src="img/html.png" alt="HTML" class="skill-icon">
                     <div class="skill-bar">
-                        <div class="skill-progress" style="width: 90%;" data-width="90">
+                        <div class="skill-progress" data-width="90">
                             <span>90%</span>
                         </div>
                     </div>
@@ -1365,7 +1413,7 @@
                 <div class="skill-item">
                     <img src="img/css.png" alt="CSS" class="skill-icon">
                     <div class="skill-bar">
-                        <div class="skill-progress" style="width: 80%;" data-width="80">
+                        <div class="skill-progress" data-width="80">
                             <span>80%</span>
                         </div>
                     </div>
@@ -1373,7 +1421,7 @@
                 <div class="skill-item">
                     <img src="img/js.png" alt="JavaScript" class="skill-icon">
                     <div class="skill-bar">
-                        <div class="skill-progress" style="width: 80%;" data-width="80">
+                        <div class="skill-progress" data-width="80">
                             <span>80%</span>
                         </div>
                     </div>
@@ -1381,7 +1429,7 @@
                 <div class="skill-item">
                     <img src="img/react.png" alt="React" class="skill-icon">
                     <div class="skill-bar">
-                        <div class="skill-progress" style="width: 10%;" data-width="10">
+                        <div class="skill-progress" data-width="10">
                             <span>10%</span>
                         </div>
                     </div>
@@ -1389,7 +1437,7 @@
                 <div class="skill-item">
                     <img src="img/py.png" alt="Python" class="skill-icon">
                     <div class="skill-bar">
-                        <div class="skill-progress" style="width: 10%;" data-width="10">
+                        <div class="skill-progress" data-width="10">
                             <span>10%</span>
                         </div>
                     </div>
@@ -1450,10 +1498,25 @@
 
     <script>
         // Theme toggle functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const allThemes = [
+            'theme-default',
+            'purpled',
+            'orangeCharcoal',
+            'lightMode',
+            'emerald',
+            'midnightTeal',
+            'vibrant'
+        ];
 
+        let count = 0;
 
+        function changeTheme() {
+            count++; // increment first
+            if (count >= allThemes.length) count = 0;
+
+            document.documentElement.className = allThemes[count];
+            localStorage.setItem('countVal', count);
+        }
 
         // Typed.js initialization
         document.addEventListener('DOMContentLoaded', function () {
@@ -1502,19 +1565,22 @@
                     header.classList.remove('scrolled');
                 }
 
-                // Animation on scroll
-                const sections = document.querySelectorAll('.hero, .section');
-                sections.forEach(section => {
-                    const sectionTop = section.getBoundingClientRect().top;
-                    const windowHeight = window.innerHeight;
-                    if (sectionTop < windowHeight - 100) {
-                        section.classList.add('visible');
-                    }
-                });
+                // Scroll animation for elements
+                animateOnScroll();
             });
 
-            // Trigger scroll once to check initial visible elements
-            window.dispatchEvent(new Event('scroll'));
+            // Initialize theme from localStorage
+            const savedIndex = localStorage.getItem('countVal');
+            if (savedIndex !== null) {
+                count = parseInt(savedIndex, 10);
+                document.documentElement.className = allThemes[count];
+            } else {
+                document.documentElement.className = allThemes[0];
+                count = 0;
+            }
+
+            // Initial check for animations
+            animateOnScroll();
         });
 
         // Profile image change function
@@ -1539,41 +1605,41 @@
             });
         });
 
+        // Scroll animation function
+        function animateOnScroll() {
+            const elementsToAnimate = document.querySelectorAll(
+                '.section-title h1, .about-image, .about-text, .skill-card, .project-card, .skill-item, .contact-form, .form-group, .sub-btn, .contact-info'
+            );
 
-        const allThemes = [
-            'theme-default',
-            'purpled',
-            'orangeCharcoal',
-            'lightMode',
-            'emerald',
-            'midnightTeal',
-            'vibrant'
-        ];
+            elementsToAnimate.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
 
-        let count = 0;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('animate');
 
-        function changeTheme() {
-            count++; // increment first
-            if (count >= allThemes.length) count = 0;
+                    // Special handling for skill bars
+                    if (element.classList.contains('skill-item')) {
+                        const progressBar = element.querySelector('.skill-progress');
+                        if (progressBar && !progressBar.classList.contains('animated')) {
+                            const width = progressBar.getAttribute('data-width');
+                            progressBar.style.width = width + '%';
+                            progressBar.classList.add('animated');
+                        }
+                    }
 
-            document.documentElement.className = allThemes[count];
-            localStorage.setItem('countVal', count);
+                    // Special handling for form groups
+                    if (element.classList.contains('form-group')) {
+                        const index = Array.from(element.parentElement.children).indexOf(element);
+                        element.style.transitionDelay = `${index * 0.1}s`;
+                    }
+                }
+            });
         }
-
-        window.onload = () => {
-            const savedIndex = localStorage.getItem('countVal');
-            if (savedIndex !== null) {
-                count = parseInt(savedIndex, 10); // set count to saved index
-                document.documentElement.className = allThemes[count];
-            } else {
-                document.documentElement.className = allThemes[0];
-                count = 0;
-            }
-        };
-
     </script>
 </body>
 
 </html>
+
 
 
