@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="theme-default">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -299,7 +300,6 @@
             align-items: center;
             justify-content: space-around;
             cursor: pointer;
-            box-shadow: 0 2px 10px var(--shadow-color);
             color: var(--white);
             font-size: 1rem;
         }
@@ -447,6 +447,7 @@
             0% {
                 box-shadow: 0 0 0 0px var(--accent1);
             }
+
             100% {
                 box-shadow: 0 0 0 15px var(--pulse-start);
             }
@@ -474,15 +475,16 @@
             box-shadow: 0 0 10px var(--accent1);
         }
 
+        /* GitHub Data Grid Layout */
         .githubData {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 1.5rem;
             width: 100%;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 2rem auto;
             padding: 0 1rem;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
         }
 
         .g-data {
@@ -490,10 +492,15 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            min-width: 150px;
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 10px;
             transition: var(--transition);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        .g-data:nth-child(3) {
+            grid-column: 1 / span 2;
         }
 
         .g-data-i {
@@ -832,6 +839,17 @@
 
         .mobile-nav.active {
             right: 0;
+            animation: borderchange 0.5s;
+        }
+
+        @keyframes borderchange {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 280px;
+            }
         }
 
         .mobile-nav a {
@@ -888,6 +906,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -898,6 +917,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -908,36 +928,39 @@
             .hero-image {
                 grid-row-start: 1;
             }
+
             .hero-content,
             .about-content,
             .contact-container {
                 grid-template-columns: 1fr;
             }
+
             .hero-text h1 {
                 font-size: 2.8rem;
             }
+
             .hero-text h3 {
                 font-size: 1.5rem;
             }
+
             .profile-image,
             .about-img {
                 width: 280px;
                 height: 280px;
             }
+
             .about-image {
                 justify-content: center;
             }
-            .g-data {
-                min-width: 130px;
-                padding: 0.8rem;
-                justify-content: start;
+
+            .githubData {
+                grid-template-columns: 1fr;
             }
-            .g-data-i {
-                font-size: 2rem;
+
+            .g-data:nth-child(3) {
+                grid-column: 1;
             }
-            .g-data-text {
-                font-size: 0.9rem;
-            }
+
             .contact-form {
                 width: 90%;
             }
@@ -947,34 +970,30 @@
             .nav-links {
                 display: none;
             }
+
             .menu-toggle {
                 display: block;
             }
+
             .hero-text h1 {
                 font-size: 2.2rem;
             }
+
             .section-title h1 {
                 font-size: 2rem;
             }
+
             .profile-image,
             .about-img {
                 width: 250px;
                 height: 250px;
             }
+
             .skills-container,
             .projects-container {
                 grid-template-columns: 1fr;
             }
-            .g-data {
-                min-width: 120px;
-                padding: 0.7rem;
-            }
-            .g-data-i {
-                font-size: 1.8rem;
-            }
-            .g-data-text {
-                font-size: 0.85rem;
-            }
+
             .contact-form {
                 width: 100%;
             }
@@ -984,44 +1003,53 @@
             .hero {
                 padding: 120px 0 50px;
             }
+
             .hero-text h1 {
                 font-size: 1.8rem;
             }
+
             .hero-text h3 {
                 font-size: 1.3rem;
             }
+
             .profile-image,
             .about-img {
                 width: 200px;
                 height: 200px;
             }
+
             .img-btn {
                 width: 40px;
                 height: 40px;
             }
+
             .section {
                 padding: 70px 0;
             }
+
             .sub-btn {
                 width: 100%;
             }
+
             .contact-form {
                 width: 100%;
             }
+
             .githubData {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
+
             .g-data {
-                width: 100%;
-                max-width: 250px;
                 flex-direction: row;
                 padding: 1rem 1.5rem;
             }
+
             .g-data-i {
                 font-size: 2rem;
                 margin-bottom: 0;
                 margin-right: 1rem;
             }
+
             .g-data-text {
                 font-size: 1rem;
                 text-align: left;
@@ -1032,18 +1060,23 @@
             .skill-card i {
                 font-size: 2rem;
             }
+
             .skill-card p {
                 font-size: 12px;
             }
+
             .skill-card {
                 padding: 1rem;
             }
+
             .g-data {
                 padding: 0.8rem 1.2rem;
             }
+
             .g-data-i {
                 font-size: 1.8rem;
             }
+
             .g-data-text {
                 font-size: 0.9rem;
             }
@@ -1054,113 +1087,144 @@
                 width: 95%;
                 padding: 0 5px;
             }
+
             .logo h1 {
                 font-size: 1.2rem;
             }
+
             .hero {
                 padding: 80px 0 30px;
             }
+
             .hero-text h1 {
                 font-size: 1.5rem;
             }
+
             .hero-text h2 {
                 font-size: 1rem;
             }
+
             .hero-text h3 {
                 font-size: 1rem;
             }
+
             .hero-text p {
                 font-size: 0.9rem;
             }
+
             .profile-image,
             .about-img {
                 width: 150px;
                 height: 150px;
             }
+
             .social-icon {
                 width: 35px;
                 height: 35px;
                 font-size: 0.9rem;
                 margin-right: 0.5rem;
             }
+
             .btn {
                 padding: 10px 20px;
                 font-size: 0.9rem;
             }
+
             .img-btn {
                 width: 30px;
                 height: 30px;
             }
+
             .section-title h1 {
                 font-size: 1.5rem;
             }
+
             .about-text p {
                 font-size: 0.9rem;
             }
+
             .skill-card {
                 padding: 1rem;
             }
+
             .skill-card i {
                 font-size: 1.5rem;
             }
+
             .skill-card h3 {
                 font-size: 1rem;
             }
+
             .skill-card p {
                 font-size: 0.8rem;
             }
+
             .project-card {
                 height: 200px;
             }
+
             .project-overlay {
                 padding: 1rem;
                 bottom: 0px;
             }
+
             .project-overlay h3 {
                 font-size: 0.9rem;
             }
+
             .project-overlay p {
                 font-size: 0.7rem;
                 margin-bottom: 0.5rem;
             }
+
             .skill-icon {
                 width: 25px;
                 height: 25px;
             }
+
             .skill-progress span {
                 font-size: 10px;
                 display: none;
             }
+
             .contact-form {
                 width: 100%;
             }
+
             .form-group input,
             .form-group textarea {
                 font-size: 0.9rem;
                 padding: 10px 12px;
             }
+
             .sub-btn {
                 width: 100%;
                 padding: 10px 20px;
                 font-size: 0.9rem;
             }
+
             .contact-details p {
                 font-size: 0.9rem;
             }
+
             .mobile-nav {
                 width: 200px;
             }
+
             .mobile-nav a {
                 font-size: 1rem;
                 padding: 0.8rem 0;
             }
+
             .g-data {
                 padding: 0.7rem 1rem;
             }
+
             .g-data-i {
                 font-size: 1.5rem;
                 margin-right: 0.7rem;
             }
+
             .g-data-text {
                 font-size: 0.8rem;
             }
@@ -1203,8 +1267,8 @@
         <a href="#contact"><i class="fa-solid fa-phone"></i> Contact</a>
         <div style="padding: 1rem 0; border-bottom: 1px solid var(--border-color);">
             <button class="themeMore" id="moreThemeToggle" onclick="changeTheme()"
-                style="width: 100%; border-radius: 5px; height: 40px;">
-                <i class="fa-solid fa-brush"></i> Switch Theme
+                style=" border-radius: 5px; height: 40px;">
+                <i class="fa-solid fa-brush"></i> 
             </button>
         </div>
     </div>
@@ -1248,6 +1312,7 @@
             </div>
         </div>
 
+        <!-- Updated GitHub Data Section with Grid Layout -->
         <div class="githubData">
             <div class="g-data">
                 <p class="g-data-i" id="exp">2</p>
@@ -1613,4 +1678,5 @@
             .catch(err => console.error("Error:", err));
     </script>
 </body>
+
 </html>
