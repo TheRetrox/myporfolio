@@ -11,6 +11,12 @@
 
     <style>
         :root {
+            --transition: all 0.3s ease;
+        }
+
+
+        /* Dark Mode Colors (Default) */
+        html.theme-default {
             --bg: #0b0b0c;
             --accent1: #00c6ff;
             --accent2: #0072ff;
@@ -20,12 +26,221 @@
             --muted: #6b7280;
             --card-bg: rgba(22, 22, 22, 0.8);
             --transition: all 0.3s ease;
+            --header-bg: rgba(11, 11, 12, 0.9);
+            --footer-bg: #080808;
+            --overlay-bg: rgba(0, 0, 0, 0.7);
+            --mobile-nav-bg: rgba(11, 11, 12, 0.98);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --accent-shadow: rgba(0, 198, 255, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.2);
+            --pulse-start: rgba(0, 198, 255, 0);
+            --project-gradient: linear-gradient(45deg, #8d538bf5, #ff6a63);
+            --project-overlay: linear-gradient(0deg, rgba(0, 198, 255, 0.9), rgba(0, 114, 255, 0.8));
         }
+
+        /* Purpled Theme */
+        html.purpled {
+            --bg: #0e0a1b;
+            --accent1: #ff2e63;
+            --accent2: #08d9d6;
+            --accent3: rgba(255, 255, 255, 0);
+            --accent4: rgba(255, 46, 99, 0.7);
+            --white: #ffffff;
+            --muted: #aaa0bb;
+            --card-bg: rgba(20, 15, 35, 0.85);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(14, 10, 27, 0.9);
+            --footer-bg: #070510;
+            --overlay-bg: rgba(0, 0, 0, 0.75);
+            --mobile-nav-bg: rgba(14, 10, 27, 0.98);
+            --border-color: rgba(255, 46, 99, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --accent-shadow: rgba(255, 46, 99, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.25);
+            --pulse-start: rgba(255, 46, 99, 0);
+            --project-gradient: linear-gradient(45deg, #ff2e63, #08d9d6);
+            --project-overlay: linear-gradient(0deg, rgba(255, 46, 99, 0.9), rgba(8, 217, 214, 0.8));
+        }
+
+        /* Orange Charcoal */
+        html.orangeCharcoal {
+            --bg: #111111;
+            --accent1: #ff6b00;
+            --accent2: #ff9f1c;
+            --accent3: rgba(255, 255, 255, 0);
+            --accent4: rgba(255, 107, 0, 0.7);
+            --white: #ffffff;
+            --muted: #999999;
+            --card-bg: rgba(25, 25, 25, 0.85);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(17, 17, 17, 0.9);
+            --footer-bg: #0c0c0c;
+            --overlay-bg: rgba(0, 0, 0, 0.75);
+            --mobile-nav-bg: rgba(20, 20, 20, 0.98);
+            --border-color: rgba(255, 107, 0, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.35);
+            --accent-shadow: rgba(255, 107, 0, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.25);
+            --pulse-start: rgba(255, 107, 0, 0);
+            --project-gradient: linear-gradient(45deg, #ff6b00, #ff9f1c);
+            --project-overlay: linear-gradient(0deg, rgba(255, 107, 0, 0.9), rgba(255, 159, 28, 0.8));
+        }
+
+
+        /* Light Mode */
+        html.lightMode {
+            --bg: #f5f5f5;
+            --accent1: #0072ff;
+            --accent2: #00c6ff;
+            --accent3: rgba(0, 0, 0, 0);
+            --accent4: rgba(0, 114, 255, 0.7);
+            --white: #000000;
+            --muted: #555555;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(245, 245, 245, 0.95);
+            --footer-bg: #e5e5e5;
+            --overlay-bg: rgba(255, 255, 255, 0.7);
+            --mobile-nav-bg: rgba(245, 245, 245, 0.98);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.15);
+            --accent-shadow: rgba(0, 114, 255, 0.3);
+            --card-shadow: rgba(0, 0, 0, 0.1);
+            --pulse-start: rgba(0, 114, 255, 0);
+            --project-gradient: linear-gradient(45deg, #0072ff, #00c6ff);
+            --project-overlay: linear-gradient(0deg, rgba(0, 114, 255, 0.9), rgba(0, 198, 255, 0.8));
+        }
+
+        /* Matrix Green */
+        html.matrix {
+            --bg: #050505;
+            --accent1: #00ff66;
+            --accent2: #00cc44;
+            --accent3: rgba(255, 255, 255, 0);
+            --accent4: rgba(0, 255, 102, 0.7);
+            --white: #e5ffe5;
+            --muted: #7fff7f;
+            --card-bg: rgba(10, 10, 10, 0.85);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(5, 5, 5, 0.9);
+            --footer-bg: #000000;
+            --overlay-bg: rgba(0, 0, 0, 0.8);
+            --mobile-nav-bg: rgba(5, 5, 5, 0.98);
+            --border-color: rgba(0, 255, 102, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --accent-shadow: rgba(0, 255, 102, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.25);
+            --pulse-start: rgba(0, 255, 102, 0);
+            --project-gradient: linear-gradient(45deg, #00ff66, #00cc44);
+            --project-overlay: linear-gradient(0deg, rgba(0, 255, 102, 0.9), rgba(0, 204, 68, 0.8));
+        }
+
+        /* Emerald Gold */
+        html.emerald {
+            --bg: #0e0e0d;
+            --accent1: #00c896;
+            --accent2: #ffd700;
+            --accent3: rgba(255, 255, 255, 0);
+            --accent4: rgba(0, 200, 150, 0.7);
+            --white: #fdfdfd;
+            --muted: #a0a0a0;
+            --card-bg: rgba(24, 24, 22, 0.85);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(10, 10, 10, 0.9);
+            --footer-bg: #0a0a0a;
+            --overlay-bg: rgba(0, 0, 0, 0.75);
+            --mobile-nav-bg: rgba(15, 15, 15, 0.98);
+            --border-color: rgba(255, 215, 0, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.35);
+            --accent-shadow: rgba(0, 200, 150, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.25);
+            --pulse-start: rgba(0, 200, 150, 0);
+            --project-gradient: linear-gradient(45deg, #00c896, #ffd700);
+            --project-overlay: linear-gradient(0deg, rgba(0, 200, 150, 0.9), rgba(255, 215, 0, 0.8));
+        }
+
+        /* Purple Glow */
+        html.purpleGlow {
+            --bg: #0a0612;
+            --accent1: #b388ff;
+            --accent2: #ff5fa2;
+            --accent3: rgba(255, 255, 255, 0);
+            --accent4: rgba(179, 136, 255, 0.7);
+            --white: #ffffff;
+            --muted: #aaa2bb;
+            --card-bg: rgba(15, 10, 30, 0.85);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(10, 5, 20, 0.9);
+            --footer-bg: #070313;
+            --overlay-bg: rgba(0, 0, 0, 0.75);
+            --mobile-nav-bg: rgba(10, 5, 20, 0.98);
+            --border-color: rgba(255, 95, 162, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --accent-shadow: rgba(179, 136, 255, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.25);
+            --pulse-start: rgba(179, 136, 255, 0);
+            --project-gradient: linear-gradient(45deg, #b388ff, #ff5fa2);
+            --project-overlay: linear-gradient(0deg, rgba(179, 136, 255, 0.9), rgba(255, 95, 162, 0.8));
+        }
+
+        /* Midnight Teal */
+        html.midnightTeal {
+            --bg: #0a0f1c;
+            --accent1: #1de9b6;
+            --accent2: #00bcd4;
+            --accent3: rgba(255, 255, 255, 0);
+            --accent4: rgba(29, 233, 182, 0.7);
+            --white: #f0faff;
+            --muted: #7da8b9;
+            --card-bg: rgba(15, 20, 35, 0.85);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(10, 15, 28, 0.9);
+            --footer-bg: #060a13;
+            --overlay-bg: rgba(0, 0, 0, 0.75);
+            --mobile-nav-bg: rgba(10, 15, 28, 0.98);
+            --border-color: rgba(0, 188, 212, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.35);
+            --accent-shadow: rgba(29, 233, 182, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.25);
+            --pulse-start: rgba(29, 233, 182, 0);
+            --project-gradient: linear-gradient(45deg, #1de9b6, #00bcd4);
+            --project-overlay: linear-gradient(0deg, rgba(29, 233, 182, 0.9), rgba(0, 188, 212, 0.8));
+        }
+
+        /* Vibrant Gradient */
+        html.vibrant {
+            --bg: #0e0a1b;
+            --accent1: #ff2e63;
+            --accent2: #08d9d6;
+            --accent3: rgba(255, 255, 255, 0);
+            --accent4: rgba(255, 46, 99, 0.7);
+            --white: #ffffff;
+            --muted: #aaa0bb;
+            --card-bg: rgba(20, 15, 35, 0.85);
+            --transition: all 0.3s ease;
+            --header-bg: rgba(14, 10, 27, 0.9);
+            --footer-bg: #070510;
+            --overlay-bg: rgba(0, 0, 0, 0.75);
+            --mobile-nav-bg: rgba(14, 10, 27, 0.98);
+            --border-color: rgba(255, 46, 99, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --accent-shadow: rgba(255, 46, 99, 0.4);
+            --card-shadow: rgba(0, 0, 0, 0.25);
+            --pulse-start: rgba(255, 46, 99, 0);
+            --project-gradient: linear-gradient(45deg, #ff2e63, #08d9d6);
+            --project-overlay: linear-gradient(0deg, rgba(255, 46, 99, 0.9), rgba(8, 217, 214, 0.8));
+        }
+
+
+
+
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         a {
@@ -52,12 +267,12 @@
             z-index: 1000;
             transition: var(--transition);
             padding: 1rem 0;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(10px);
         }
 
         header.scrolled {
-            background-color: rgba(11, 11, 12, 0);
-            backdrop-filter: blur(2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 20px var(--shadow-color);
         }
 
         .container {
@@ -81,12 +296,13 @@
 
         .logo span {
             color: var(--accent1);
-            text-shadow: 0 0 10px var(--accent1);
+            /* Removed text-shadow: 0 0 10px var(--accent1); */
         }
 
         .nav-links {
             display: flex;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links li {
@@ -121,6 +337,26 @@
         .nav-links a:hover::after {
             width: 100%;
         }
+
+        /* Theme Toggle in Nav */
+
+      .themeMore {
+    background: var(--card-bg);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    box-shadow: 0 2px 10px var(--shadow-color);
+    color: var(--white);
+    font-size: 1rem;
+}
+
+
+
 
         .menu-toggle {
             display: none;
@@ -203,7 +439,7 @@
             background: linear-gradient(45deg, var(--accent1), var(--accent2));
             color: var(--bg);
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 198, 255, 0.4);
+            box-shadow: 0 5px 15px var(--accent-shadow);
         }
 
         .btn {
@@ -240,7 +476,7 @@
 
         .btn:hover {
             color: var(--bg);
-            box-shadow: 0 5px 20px rgba(0, 198, 255, 0.4);
+            box-shadow: 0 5px 20px var(--accent-shadow);
         }
 
         .hero-image {
@@ -268,7 +504,7 @@
             }
 
             100% {
-                box-shadow: 0 0 0 15px rgba(0, 198, 255, 0);
+                box-shadow: 0 0 0 15px var(--pulse-start);
             }
         }
 
@@ -319,7 +555,7 @@
 
         .section-title span {
             color: var(--accent1);
-            text-shadow: 0 0 10px var(--accent1);
+            /* Removed text-shadow: 0 0 10px var(--accent1); */
         }
 
         .about-content {
@@ -368,7 +604,7 @@
         .skill-card:hover {
             transform: translateY(-10px);
             border-color: var(--accent1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px var(--card-shadow);
         }
 
         .skill-card i {
@@ -394,8 +630,8 @@
             overflow: hidden;
             position: relative;
             height: 300px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            background-image: linear-gradient(45deg, #8d538bf5, #ff6a63);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            background: var(--project-gradient);
         }
 
         .project-image {
@@ -412,7 +648,7 @@
             left: 0;
             width: 100%;
             padding: 2rem;
-            background: linear-gradient(0deg, rgba(0, 198, 255, 0.9), rgba(0, 114, 255, 0.8));
+            background: var(--project-overlay);
             transform: translateY(100%);
             transition: var(--transition);
             color: white;
@@ -538,7 +774,7 @@
 
         .sub-btn:hover {
             color: var(--bg);
-            box-shadow: 0 5px 20px rgba(0, 198, 255, 0.4);
+            box-shadow: 0 5px 20px var(--accent-shadow);
         }
 
         .form-group input:focus,
@@ -575,7 +811,7 @@
 
         /* Footer */
         footer {
-            background: #080808;
+            background: var(--footer-bg);
             padding: 2rem 0;
             text-align: center;
         }
@@ -587,7 +823,7 @@
             right: -100%;
             width: 280px;
             height: 100vh;
-            background: rgba(11, 11, 12, 0.98);
+            background: var(--mobile-nav-bg);
             backdrop-filter: blur(10px);
             z-index: 1001;
             transition: var(--transition);
@@ -606,7 +842,7 @@
             text-decoration: none;
             padding: 1rem 0;
             font-size: 1.2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-color);
             transition: var(--transition);
         }
 
@@ -632,7 +868,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: var(--overlay-bg);
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
@@ -890,8 +1126,6 @@
                 font-size: 1rem;
                 padding: 0.8rem 0;
             }
-
-
         }
     </style>
 </head>
@@ -909,6 +1143,13 @@
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
+
+                <li>
+                    <button class="themeMore" id="moreThemeToggle" onclick="changeTheme()">
+                        <i class="fa-solid fa-brush"></i>
+                    </button>
+                </li>
+
             </ul>
             <button class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
@@ -926,6 +1167,14 @@
         <a href="#skills"><i class="fa-solid fa-paintbrush"></i> Skills</a>
         <a href="#projects"><i class="fa-solid fa-diagram-project"></i> Projects</a>
         <a href="#contact"><i class="fa-solid fa-phone"></i> Contact</a>
+
+        <div style="padding: 1rem 0; border-bottom: 1px solid var(--border-color);">
+            <button class="themeMore" id="moreThemeToggle" onclick="changeTheme()"
+                style="width: 100%; border-radius: 5px; height: 40px;">
+                <i class="fa-solid fa-brush"></i> Switch Theme
+            </button>
+        </div>
+
     </div>
     <div class="overlay" id="overlay"></div>
 
@@ -981,7 +1230,7 @@
                 </div>
                 <div class="about-text">
                     <p>
-                        I’m a passionate developer with a strong foundation in web technologies and a creative approach
+                        I'm a passionate developer with a strong foundation in web technologies and a creative approach
                         to problem-solving. I enjoy turning ideas into interactive projects, exploring new concepts, and
                         building solutions that are both functional and engaging.
                     </p>
@@ -1070,26 +1319,26 @@
                     <div class="project-image" style="background-image: url('img/snakegameimg.png');"></div>
                     <div class="project-overlay">
                         <h3>Snake Game</h3>
-                       <p>Classic Snake game: eat, grow, and avoid collisions.</p>
+                        <p>Classic Snake game: eat, grow, and avoid collisions.</p>
                         <a href="Snake Game/snakegame.html" class="btn">View Project</a>
                     </div>
                 </div>
 
 
-                  <div class="project-card">
+                <div class="project-card">
                     <div class="project-image" style="background-image: url('img/flappybirdimg.png');"></div>
                     <div class="project-overlay">
                         <h3>Flappy Bird</h3>
-                       <p>Flappy Bird game: tap to fly and dodge obstacles.</p>
+                        <p>Flappy Bird game: tap to fly and dodge obstacles.</p>
                         <a href="Flappy-Bird/flappybird.html" class="btn">View Project</a>
                     </div>
                 </div>
 
-                   <div class="project-card">
+                <div class="project-card">
                     <div class="project-image" style="background-image: url('img/spaceshotter.png');"></div>
                     <div class="project-overlay">
-                        <h3>Space Shooter (demo)</h3>
-                       <p>Space Shooter game: tap to shoot and dodge enemies.</p>
+                        <h3>Space Shooter</h3>
+                        <p>Space Shooter game: tap to shoot and dodge enemies.</p>
                         <a href="spaceshooter/spaceshooter.html" class="btn">View Project</a>
                     </div>
                 </div>
@@ -1200,6 +1449,12 @@
     </footer>
 
     <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+
+
+
         // Typed.js initialization
         document.addEventListener('DOMContentLoaded', function () {
             const typed = new Typed('.text', {
@@ -1283,8 +1538,40 @@
                 }
             });
         });
+
+
+        const allThemes = [
+            'theme-default',
+            'purpled',
+            'orangeCharcoal',
+            'lightMode',
+            'emerald',
+            'midnightTeal',
+            'vibrant'
+        ];
+
+        let count = 0;
+
+        function changeTheme() {
+            count++; // increment first
+            if (count >= allThemes.length) count = 0;
+
+            document.documentElement.className = allThemes[count];
+            localStorage.setItem('countVal', count);
+        }
+
+        window.onload = () => {
+            const savedIndex = localStorage.getItem('countVal');
+            if (savedIndex !== null) {
+                count = parseInt(savedIndex, 10); // set count to saved index
+                document.documentElement.className = allThemes[count];
+            } else {
+                document.documentElement.className = allThemes[0];
+                count = 0;
+            }
+        };
+
+
     </script>
 </body>
-
-
 </html>
