@@ -151,6 +151,22 @@
             height: 100%;
         }
 
+        .fixed-bg {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        .particles {
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent1);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0px 0px 10px 1px var(--accent1);
+        }
+
         h1,
         h2,
         h3,
@@ -238,7 +254,8 @@
             width: 100%;
         }
 
-        .themeMore {
+        .themeMore,
+        .speed-control-btn {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             width: 40px;
@@ -1037,6 +1054,100 @@
             gap: 1rem;
         }
 
+        /* Speed Control Panel Styles */
+        .speed-control-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            z-index: 1000;
+            display: none;
+            max-width: 300px;
+            width: 90%;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .speed-control-panel.active {
+            display: block;
+        }
+
+        .speed-control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .speed-control-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .speed-control-close {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+
+        .speed-control-close:hover {
+            background: var(--accent1);
+            color: var(--bg);
+        }
+
+        .speed-control-slider {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .speed-control-value {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--accent1);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .speed-control-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--white);
+            font-size: 1rem;
+            transition: var(--transition);
+
+        }
+
+
+        /* Mobile nav update */
+        .mobile-nav .speed-control-btn {
+            margin: 1rem 0;
+            border-radius: 5px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -1151,6 +1262,13 @@
                 flex-direction: column;
                 align-items: center;
             }
+
+            .speed-control-panel {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1224,6 +1342,14 @@
             .project-buttons {
                 flex-direction: column;
             }
+
+            .speed-control-panel {
+                padding: 12px;
+            }
+
+            .speed-control-title {
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 400px) {
@@ -1254,6 +1380,12 @@
             .project-btn {
                 padding: 8px 15px;
                 font-size: 0.8rem;
+            }
+
+            .speed-control-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
             }
         }
 
@@ -1403,12 +1535,24 @@
                 padding: 6px 12px;
                 font-size: 0.7rem;
             }
+
+            .speed-control-panel {
+                padding: 10px;
+            }
+
+            .speed-control-title {
+                font-size: 0.8rem;
+            }
+
+            .speed-control-value {
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 
 <body>
-
+    <div class="fixed-bg"></div>
     <header>
         <div class="container nav-container">
             <div class="logo">
@@ -1423,6 +1567,12 @@
                 <li>
                     <button class="themeMore" id="moreThemeToggle">
                         <i class="fa-solid fa-brush"></i>
+                    </button>
+                </li>
+                <!-- New speed control button -->
+                <li>
+                    <button class="speed-control-btn" id="speedControlToggle">
+                        <i class="fa-solid fa-gauge-high"></i>
                     </button>
                 </li>
             </ul>
@@ -1441,13 +1591,29 @@
         <a href="#skills"><i class="fa-solid fa-paintbrush"></i> Skills</a>
         <a href="#projects"><i class="fa-solid fa-diagram-project"></i> Projects</a>
         <a href="#contact"><i class="fa-solid fa-phone"></i> Contact</a>
-        <div style="padding: 1rem 0; border-bottom: 1px solid var(--border-color);">
-            <button class="themeMore" id="mobileThemeToggle" style="border-radius: 5px; height: 40px;">
+        <div style="padding: 1rem 0; ">
+            <button class="themeMore" id="mobileThemeToggle" style="border-radius: 5px; height: 40px; width: 100%;">
                 <i class="fa-solid fa-brush"></i>
             </button>
         </div>
+        <!-- New speed control button for mobile -->
+        <button class="speed-control-btn" id="mobileSpeedControlToggle">
+            <i class="fa-solid fa-gauge-high"></i>
+        </button>
     </div>
     <div class="overlay" id="overlay"></div>
+
+    <!-- Speed Control Panel -->
+    <div class="speed-control-panel" id="speedControlPanel">
+        <div class="speed-control-header">
+            <div class="speed-control-title">Particle Speed Control</div>
+            <button class="speed-control-close" id="speedControlClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <input type="range" min="1" max="5" step="0.1" value="2" class="speed-control-slider" id="speedControlSlider">
+        <div class="speed-control-value">Current Speed: <span id="speedValue">2</span>x</div>
+    </div>
 
     <section class="hero" id="home">
         <div class="container">
@@ -1489,7 +1655,7 @@
             </div>
         </div>
 
-        <!-- Updated GitHub Data Section with Grid Layout -->
+        <!-- GitHub Data Section -->
         <div class="githubData">
             <div class="g-data">
                 <p class="g-data-i" id="exp">2</p>
@@ -1881,6 +2047,9 @@
             document.body.style.overflow = 'auto';
         }
 
+
+
+
         // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function () {
             // Typed.js initialization
@@ -1945,6 +2114,24 @@
             document.getElementById('mobileThemeToggle').addEventListener('click', function () {
                 changeTheme();
                 closeMobileMenu();
+            });
+
+            // Speed Control Event Listeners
+            document.getElementById('speedControlToggle').addEventListener('click', openSpeedControlPanel);
+            document.getElementById('mobileSpeedControlToggle').addEventListener('click', function () {
+                openSpeedControlPanel();
+                closeMobileMenu();
+            });
+            document.getElementById('speedControlClose').addEventListener('click', closeSpeedControlPanel);
+            speedControlSlider.addEventListener('input', updateSpeedControl);
+
+            // Close speed control panel when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!speedControlPanel.contains(event.target) &&
+                    !document.getElementById('speedControlToggle').contains(event.target) &&
+                    !document.getElementById('mobileSpeedControlToggle').contains(event.target)) {
+                    closeSpeedControlPanel();
+                }
             });
 
             // Initialize skill bars with their values
@@ -2035,6 +2222,90 @@
                 }
             });
         }
+
+
+
+
+
+
+        // Background particles animation
+        const bg = document.querySelector(".fixed-bg");
+
+        let allp = [];
+        let allpPosition = [];
+        let randomDir = [];
+        let maxLimit = 0;
+
+        // Speed Control Variables
+        let speedControl = 2;
+        let speedControlPanel = document.getElementById('speedControlPanel');
+        let speedControlSlider = document.getElementById('speedControlSlider');
+        let speedValue = document.getElementById('speedValue');
+
+        function openSpeedControlPanel() {
+            speedControlPanel.classList.add('active');
+        }
+        function closeSpeedControlPanel() {
+            speedControlPanel.classList.remove('active');
+        }
+
+        function gameloop() {
+            updateAnimation();
+            if (maxLimit < 50) {
+                createP();
+                maxLimit++;
+            }
+            updateSpeedControl();
+            requestAnimationFrame(gameloop);
+        }
+
+        //  Update speedControl value from slider
+        function updateSpeedControl() {
+            speedControl = +speedControlSlider.value;
+            speedValue.textContent = speedControlSlider.value;
+        }
+
+        function updateAnimation() {
+            for (let i = 0; i < allp.length; i++) {
+                let pos = allpPosition[i];
+                let baseDir = randomDir[i];
+
+                // Apply speed multiplier here 
+                pos.x += baseDir.dx * speedControl;
+                pos.y += baseDir.dy * speedControl;
+
+                // Bounce off edges
+                if (pos.x <= 0 || pos.x >= bg.clientWidth) baseDir.dx *= -1;
+                if (pos.y <= 0 || pos.y >= bg.clientHeight) baseDir.dy *= -1;
+
+                allp[i].style.left = pos.x + "px";
+                allp[i].style.top = pos.y + "px";
+            }
+        }
+
+        function createP() {
+            let x = Math.random() * bg.clientWidth;
+            let y = Math.random() * bg.clientHeight;
+            let w = Math.random() * 5 + 2;
+
+            let particle = document.createElement("div");
+            particle.classList.add('particles');
+            particle.style.width = w + 'px';
+            particle.style.height = w + 'px';
+            bg.appendChild(particle);
+
+            allp.push(particle);
+            allpPosition.push({ x: x, y: y });
+
+            // Base speed (no speedControl yet)
+            let baseSpeedX = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
+            let baseSpeedY = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
+
+            randomDir.push({ dx: baseSpeedX, dy: baseSpeedY });
+        }
+
+        requestAnimationFrame(gameloop);
+
     </script>
 </body>
 
