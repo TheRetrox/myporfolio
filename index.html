@@ -222,7 +222,7 @@
         }
 
         .nav-links li {
-            margin-left: 2rem;
+            margin-left: 1rem;
         }
 
         .nav-links a {
@@ -255,7 +255,8 @@
         }
 
         .themeMore,
-        .speed-control-btn {
+        .speed-control-btn,
+        .bg-mode-btn {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             width: 40px;
@@ -263,10 +264,24 @@
             border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: center;
             cursor: pointer;
             color: var(--white);
             font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .themeMore:hover,
+        .speed-control-btn:hover,
+        .bg-mode-btn:hover {
+            background: var(--accent1);
+            color: var(--bg);
+            box-shadow: 0 0 10px var(--accent-shadow);
+        }
+
+        .bg-mode-btn.active {
+            background: var(--accent1);
+            color: var(--bg);
         }
 
         .menu-toggle {
@@ -1121,25 +1136,9 @@
             margin-top: 5px;
         }
 
-        .speed-control-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--white);
-            font-size: 1rem;
-            transition: var(--transition);
-
-        }
-
-
         /* Mobile nav update */
-        .mobile-nav .speed-control-btn {
+        .mobile-nav .speed-control-btn,
+        .mobile-nav .bg-mode-btn {
             margin: 1rem 0;
             border-radius: 5px;
             height: 40px;
@@ -1382,7 +1381,8 @@
                 font-size: 0.8rem;
             }
 
-            .speed-control-btn {
+            .speed-control-btn,
+            .bg-mode-btn {
                 width: 35px;
                 height: 35px;
                 font-size: 0.9rem;
@@ -1569,8 +1569,14 @@
                         <i class="fa-solid fa-brush"></i>
                     </button>
                 </li>
-                <!-- New speed control button -->
+                <!-- Background Animation Mode Button -->
                 <li>
+                    <button class="bg-mode-btn" id="bgModeToggle">
+                        <i class="fa-solid fa-meteor"></i>
+                    </button>
+                </li>
+                <!-- Speed control button (only shown when flow mode is active) -->
+                <li class="speed-control-item" id="speedControlItem">
                     <button class="speed-control-btn" id="speedControlToggle">
                         <i class="fa-solid fa-gauge-high"></i>
                     </button>
@@ -1591,15 +1597,21 @@
         <a href="#skills"><i class="fa-solid fa-paintbrush"></i> Skills</a>
         <a href="#projects"><i class="fa-solid fa-diagram-project"></i> Projects</a>
         <a href="#contact"><i class="fa-solid fa-phone"></i> Contact</a>
-        <div style="padding: 1rem 0; ">
+        <div style="padding: 1rem 0;">
             <button class="themeMore" id="mobileThemeToggle" style="border-radius: 5px; height: 40px; width: 100%;">
                 <i class="fa-solid fa-brush"></i>
             </button>
         </div>
-        <!-- New speed control button for mobile -->
-        <button class="speed-control-btn" id="mobileSpeedControlToggle">
-            <i class="fa-solid fa-gauge-high"></i>
+        <!-- Background Animation Mode Button for Mobile -->
+        <button class="bg-mode-btn" id="mobileBgModeToggle">
+            <i class="fa-solid fa-meteor"></i>
         </button>
+        <!-- Speed control button for mobile (only shown when flow mode is active) -->
+        <div class="speed-control-item" id="mobileSpeedControlItem">
+            <button class="speed-control-btn" id="mobileSpeedControlToggle">
+                <i class="fa-solid fa-gauge-high"></i>
+            </button>
+        </div>
     </div>
     <div class="overlay" id="overlay"></div>
 
@@ -1611,7 +1623,7 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <input type="range" min="1" max="5" step="0.1" value="1" class="speed-control-slider" id="speedControlSlider">
+        <input type="range" min="1" max="5" step="0.1" value="2" class="speed-control-slider" id="speedControlSlider">
         <div class="speed-control-value">Current Speed: <span id="speedValue">2</span>x</div>
     </div>
 
@@ -1947,6 +1959,9 @@
     </div>
 
     <script>
+        // Background Animation Mode State
+        let flow = false; // false = gravity mode, true = flow mode
+
         // Theme Management
         const allThemes = [
             'theme-default',
@@ -2047,8 +2062,63 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Background Animation Mode Toggle
+        function toggleBgAnimationMode() {
+            flow = !flow;
+            
+            // Clear existing particles
+            clearParticles();
+            
+            // Update button appearance
+            const bgModeButtons = document.querySelectorAll('.bg-mode-btn');
+            bgModeButtons.forEach(button => {
+                if (flow) {
+                    button.classList.add('active');
+                    button.innerHTML = '<i class="fa-solid fa-water"></i>';
+                } else {
+                    button.classList.remove('active');
+                    button.innerHTML = '<i class="fa-solid fa-meteor"></i>';
+                }
+            });
+            
+            // Toggle speed control visibility
+            toggleSpeedControlVisibility();
+        }
 
+        // Clear all particles
+        function clearParticles() {
+            const bg = document.querySelector(".fixed-bg");
+            const particles = document.querySelectorAll('.particles');
+            particles.forEach(particle => {
+                if (particle.parentNode === bg) {
+                    bg.removeChild(particle);
+                }
+            });
+            
+            // Reset particle arrays
+            allp = [];
+            allpPosition = [];
+            randomDir = [];
+            allvelo = [];
+            dirval = [];
+            maxLimit = 0;
+        }
 
+        // Toggle speed control visibility based on flow mode
+        function toggleSpeedControlVisibility() {
+            const speedControlItems = document.querySelectorAll('.speed-control-item');
+            if (flow) {
+                speedControlItems.forEach(item => {
+                    item.style.display = 'block';
+                });
+            } else {
+                speedControlItems.forEach(item => {
+                    item.style.display = 'none';
+                });
+                // Close speed control panel if open
+                closeSpeedControlPanel();
+            }
+        }
 
         // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function () {
@@ -2113,6 +2183,13 @@
             document.getElementById('moreThemeToggle').addEventListener('click', changeTheme);
             document.getElementById('mobileThemeToggle').addEventListener('click', function () {
                 changeTheme();
+                closeMobileMenu();
+            });
+
+            // Background Animation Mode Toggle Buttons
+            document.getElementById('bgModeToggle').addEventListener('click', toggleBgAnimationMode);
+            document.getElementById('mobileBgModeToggle').addEventListener('click', function () {
+                toggleBgAnimationMode();
                 closeMobileMenu();
             });
 
@@ -2198,6 +2275,9 @@
                     proj.innerText = "27";
                 });
 
+            // Initialize speed control visibility
+            toggleSpeedControlVisibility();
+
             // Initial animation trigger
             animateOnScroll();
         });
@@ -2223,11 +2303,6 @@
             });
         }
 
-
-
-
-
-
         // Background particles animation
         const bg = document.querySelector(".fixed-bg");
 
@@ -2235,6 +2310,11 @@
         let allpPosition = [];
         let randomDir = [];
         let maxLimit = 0;
+
+        // Gravity animation variables
+        let allvelo = [];
+        let g = 0.1;
+        let dirval = [];
 
         // Speed Control Variables
         let speedControl = 2;
@@ -2245,21 +2325,31 @@
         function openSpeedControlPanel() {
             speedControlPanel.classList.add('active');
         }
+        
         function closeSpeedControlPanel() {
             speedControlPanel.classList.remove('active');
         }
 
+        let pamount = 20;
         function gameloop() {
-            updateAnimation();
-            if (maxLimit < 30) {
-                createP();
-                maxLimit++;
+            if (flow) {
+                if (maxLimit < pamount) {
+                    createP();
+                    maxLimit++;
+                }
+                updateAnimation();
+            } else {
+                if (maxLimit < pamount) {
+                    createPgravity();
+                    maxLimit++;
+                }
+                applygravity();
             }
-            updateSpeedControl();
+
             requestAnimationFrame(gameloop);
         }
 
-        //  Update speedControl value from slider
+        // Update speedControl value from slider
         function updateSpeedControl() {
             speedControl = +speedControlSlider.value;
             speedValue.textContent = speedControlSlider.value;
@@ -2300,15 +2390,55 @@
             // Base speed (no speedControl yet)
             let baseSpeedX = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
             let baseSpeedY = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
-
             randomDir.push({ dx: baseSpeedX, dy: baseSpeedY });
         }
 
-        requestAnimationFrame(gameloop);
+        function createPgravity() {
+            let x = Math.random() * bg.clientWidth;
+            let y = Math.random() * bg.clientHeight;
+            let w = Math.random() * 5 + 2;
+            let particle = document.createElement("div");
+            particle.classList.add('particles');
+            particle.style.width = w + 'px';
+            particle.style.height = w + 'px';
+            bg.appendChild(particle);
+            allp.push(particle);
+            allpPosition.push({ x: x, y: y });
+            allvelo.push(0.1);
 
+            let dirluck = Math.floor(Math.random() * 2);
+            if (dirluck == 1) {
+                dirval.push(-5);
+            } else {
+                dirval.push(5);
+            }
+        }
+
+        function applygravity() {
+            for (let i = 0; i < allvelo.length; i++) {
+                allpPosition[i].y += allvelo[i];
+                allpPosition[i].x += dirval[i];
+                allp[i].style.top = allpPosition[i].y + "px";
+                allp[i].style.left = allpPosition[i].x + "px";
+
+                // Collision
+                if (allpPosition[i].x <= 0) {
+                    dirval[i] = Math.abs(dirval[i]);
+                }
+                if (allpPosition[i].x >= bg.clientWidth) {
+                    dirval[i] = -dirval[i];
+                }
+
+                if (allpPosition[i].y >= bg.clientHeight) {
+                    allvelo[i] = -allvelo[i];
+                } else {
+                    allvelo[i] += g;
+                }
+            }
+        }
+
+        requestAnimationFrame(gameloop);
     </script>
 </body>
 
 </html>
-
-
