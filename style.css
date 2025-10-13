@@ -22,7 +22,7 @@
     --pulse-start: rgba(0, 198, 255, 0);
     --project-gradient: linear-gradient(45deg, #8d538bf5, #ff6a63);
     --project-overlay: linear-gradient(0deg, rgba(0, 198, 255, 0.9), rgba(0, 114, 255, 0.8));
-    --icon-color: #00c6ff;
+    --icon-color: #008cb3;
 }
 
 html.purpled {
@@ -91,7 +91,7 @@ html.crimsonNight {
     --pulse-start: rgba(195, 0, 16, 0);
     --project-gradient: linear-gradient(45deg, #c30010, #ff1a1a);
     --project-overlay: linear-gradient(0deg, rgba(195, 0, 16, 0.9), rgba(255, 26, 26, 0.8));
-    --icon-color: #ffffff;
+    --icon-color: #ff3232;
 }
 
 html.goldObsidian {
