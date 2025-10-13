@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-default">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="no">
+    <meta name="description" content="Anirban Roy - Portfolio Website">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <title>Anirban Roy - Portfolio</title>
+
+</head>
+
+<body>
+    <div class="fixed-bg"></div>
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <h1><span>Anirban</span>Roy</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <button class="themeMore" id="moreThemeToggle">
+                        <i class="fa-solid fa-brush"></i>
+                    </button>
+                </li>
+                <!-- Customize Button -->
+                <li>
+                    <button class="customize-btn" id="customizeToggle">
+                        <i class="fa-solid fa-sliders"></i>
+                    </button>
+                </li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-menu" id="closeMenu">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#about"><i class="fa-solid fa-address-card"></i> About</a>
+        <a href="#skills"><i class="fa-solid fa-paintbrush"></i> Skills</a>
+        <a href="#projects"><i class="fa-solid fa-diagram-project"></i> Projects</a>
+        <a href="#contact"><i class="fa-solid fa-phone"></i> Contact</a>
+        <div style="padding: 1rem 0;">
+            <button class="themeMore" id="mobileThemeToggle" style="border-radius: 5px; height: 40px; width: 100%;">
+                <i class="fa-solid fa-brush"></i>
+            </button>
+        </div>
+        <!-- Customize Button for Mobile -->
+        <button class="customize-btn" id="mobileCustomizeToggle">
+            <i class="fa-solid fa-sliders"></i>
+        </button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Customization Popup -->
+    <div class="customization-popup" id="customizationPopup">
+        <div class="customization-content">
+            <button class="popup-close" id="customizationClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="customization-title">Animation Customization</h2>
+
+            <div class="customization-section">
+                <div class="customization-section-title">
+                    <i class="fa-solid fa-water"></i>
+                    <span>Animation Mode</span>
+                </div>
+                <div class="mode-selector">
+                    <div class="mode-option active" data-mode="flow">
+                        <div class="mode-icon">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        <div class="mode-name">Flow</div>
+                    </div>
+                    <div class="mode-option" data-mode="gravity">
+                        <div class="mode-icon">
+                            <i class="fa-solid fa-meteor"></i>
+                        </div>
+                        <div class="mode-name">Gravity</div>
+                    </div>
+                    <div class="mode-option" data-mode="off">
+                        <div class="mode-icon">
+                            <i class="fa-solid fa-power-off"></i>
+                        </div>
+                        <div class="mode-name">Off</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="customization-section">
+                <div class="customization-section-title">
+                    <i class="fa-solid fa-circle"></i>
+                    <span>Particle Settings</span>
+                </div>
+
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span class="slider-name">Particle Amount</span>
+                        <span class="slider-value" id="particleAmountValue">50</span>
+                    </div>
+                    <input type="range" min="10" max="100" value="10" class="customization-slider"
+                        id="particleAmountSlider">
+                </div>
+
+                <div class="slider-container" id="speedSliderContainer">
+                    <div class="slider-label">
+                        <span class="slider-name">Animation Speed</span>
+                        <span class="slider-value" id="animationSpeedValue">2.0x</span>
+                    </div>
+                    <input type="range" min="1" max="5" step="0.1" value="1" class="customization-slider"
+                        id="animationSpeedSlider">
+                </div>
+            </div>
+
+            <div class="customization-actions">
+                <button class="customization-btn reset-btn" id="resetSettings">Reset to Default</button>
+                <button class="customization-btn apply-btn" id="applySettings">Apply Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Hello, It's Me</h2>
+                    <h1>Anirban Roy</h1>
+                    <h3>And I'm a <span class="text"></span></h3>
+                    <p>
+                        I'm a passionate developer with a strong interest in creating interactive and engaging digital
+                        experiences. I enjoy building projects that combine creativity with problem-solving.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                    <a href="#about" class="btn">About Me</a>
+                </div>
+                <div class="hero-content-inside">
+                    <div class="hero-image">
+                        <div class="profile-image" id="profileImage"></div>
+                        <div class="image-selector">
+                            <button class="img-btn" style="background-image: url('img/nopfp2.svg');"
+                                onmouseover="changeImage('img/nopfp2.svg')">0</button>
+                            <button class="img-btn" style="background-image: url('img/nopfp2.svg');"
+                                onmouseover="changeImage('img/nopfp2.svg')">0</button>
+                            <button class="img-btn" style="background-image: url('img/nopfp2.svg');"
+                                onmouseover="changeImage('img/nopfp2.svg')">0</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GitHub Data Section -->
+        <div class="githubData">
+            <div class="g-data">
+                <p class="g-data-i" id="exp">2</p>
+                <p class="g-data-text">Years of experience</p>
+            </div>
+            <div class="g-data">
+                <p class="g-data-i" id="repo">2</p>
+                <p class="g-data-text">GitHub repo</p>
+            </div>
+            <div class="g-data">
+                <p class="g-data-i" id="lan">2</p>
+                <p class="g-data-text">Project Completed</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h1>About <span>Me</span></h1>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="about-img"></div>
+                </div>
+                <div class="about-text">
+                    <p>
+                        I'm a passionate developer with a strong foundation in web technologies and a creative approach
+                        to problem-solving. I enjoy turning ideas into interactive projects, exploring new concepts, and
+                        building solutions that are both functional and engaging.
+                    </p>
+                    <p>
+                        Always curious and eager to learn, I'm continuously improving my skills in coding, design, and
+                        development to bring new ideas to life.
+                    </p>
+                    <a href="#skills" class="btn">My Skills</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h1>My <span>Skills</span></h1>
+            </div>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Frontend Development</h3>
+                    <p>
+                        Skilled in HTML, CSS, and JavaScript, I create responsive and interactive user interfaces that
+                        bring ideas to life.
+                    </p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-server"></i>
+                    <h3>Backend Development</h3>
+                    <p>
+                        Experienced with Node.js, I enjoy building the logic and functionality that power applications
+                        behind the scenes.
+                    </p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>Creative Development</h3>
+                    <p>
+                        Skilled in transforming ideas into impactful projects by blending innovation with practical
+                        execution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h1>My Latest <span>Work</span></h1>
+            </div>
+            <div class="projects-container">
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Weather App</h3>
+                        <p>A responsive weather application that displays current weather conditions and forecasts.</p>
+                        <div class="project-buttons">
+                            <a href="weatherapp/weatherapp.html" class="project-btn">View Project</a>
+                            <button class="project-btn" data-project="weather">Project Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Tic Tac Toe</h3>
+                        <p>An interactive game with smooth animations and responsive design.</p>
+                        <div class="project-buttons">
+                            <a href="tic-tac/tic-tac-index.html" class="project-btn">View Project</a>
+                            <button class="project-btn" data-project="tictactoe">Project Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-meteor"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Gravity Simulator</h3>
+                        <p>A physics-based simulation demonstrating gravitational interactions.</p>
+                        <div class="project-buttons">
+                            <a href="gravity/gravity-simu-index.html" class="project-btn">View Project</a>
+                            <button class="project-btn" data-project="gravity">Project Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fa-solid fa-staff-snake"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Snake Game</h3>
+                        <p>Classic Snake game: eat, grow, and avoid collisions.</p>
+                        <div class="project-buttons">
+                            <a href="Snake Game/snakegame.html" class="project-btn">View Project</a>
+                            <button class="project-btn" data-project="snake">Project Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-dove"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Flappy Bird</h3>
+                        <p>Flappy Bird game: tap to fly and dodge obstacles.</p>
+                        <div class="project-buttons">
+                            <a href="Flappy-Bird/flappybird.html" class="project-btn">View Project</a>
+                            <button class="project-btn" data-project="flappybird">Project Details</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-icon">
+                        <i class="fas fa-space-shuttle"></i>
+                    </div>
+                    <div class="project-overlay">
+                        <h3>Space Shooter</h3>
+                        <p>Space Shooter game: tap to shoot and dodge enemies.</p>
+                        <div class="project-buttons">
+                            <a href="spaceshooter/spaceshooter.html" class="project-btn">View Project</a>
+                            <button class="project-btn" data-project="spaceshooter">Project Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h1>Technical <span>Skills</span></h1>
+            </div>
+            <div class="tech-skills">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <img src="img/html.png" alt="HTML" class="skill-icon">
+                            <span>HTML</span>
+                        </div>
+                        <span class="skill-percentage">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <img src="img/css.png" alt="CSS" class="skill-icon">
+                            <span>CSS</span>
+                        </div>
+                        <span class="skill-percentage">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <img src="img/js.png" alt="JavaScript" class="skill-icon">
+                            <span>JavaScript</span>
+                        </div>
+                        <span class="skill-percentage">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <img src="img/react.png" alt="React" class="skill-icon">
+                            <span>React</span>
+                        </div>
+                        <span class="skill-percentage">10%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="10"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <div class="skill-name">
+                            <img src="img/py.png" alt="Python" class="skill-icon">
+                            <span>Python</span>
+                        </div>
+                        <span class="skill-percentage">10%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h1>Contact <span>Me</span></h1>
+            </div>
+            <div class="contact-container">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="sub-btn">Send Message</button>
+                </form>
+                <div class="contact-info">
+                    <div class="contact-details">
+                        <p><i class="fas fa-phone"></i> 017*******</p>
+                        <p><i class="fas fa-envelope"></i> www.@gmail.com</p>
+                    </div>
+                    <div class="contact-social">
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Anirban Roy. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Project Details Popup -->
+    <div class="project-popup" id="projectPopup">
+        <div class="popup-content">
+            <button class="popup-close" id="popupClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="popup-title" id="popupTitle">Project Title</h2>
+            <div class="popup-icon" id="popupIcon">
+                <i class="fas fa-cloud-sun"></i>
+            </div>
+            <div class="popup-description" id="popupDescription">
+                Project description will appear here.
+            </div>
+            <div class="popup-tech" id="popupTech">
+                <!-- Tech tags will be inserted here -->
+            </div>
+            <div class="popup-links">
+                <a href="#" class="project-btn" id="popupLiveLink">Live Demo</a>
+                <a href="#" class="project-btn" id="popupCodeLink">View Code</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js">
+
+    </script>
+</body>
+
+</html>

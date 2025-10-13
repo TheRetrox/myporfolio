@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="style.css">
+    <title>Bouncing Balls Physics Simulation</title>
+  
+</head>
+
+<body>
+    <header>
+        <h1>Bouncing Balls Physics Simulation</h1>
+        <p>Click anywhere on the board to create bouncing balls. Adjust gravity and bounce factors to see different
+            physics behaviors.</p>
+    </header>
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="gravity">Gravity (g):</label>
+            <input type="number" id="gravity" value="0.5" step="0.1" min="0.1" max="2">
+        </div>
+
+        <div class="control-group">
+            <label for="bounce">Bounce Factor (f):</label>
+            <input type="number" id="bounce" value="0.8" step="0.1" min="0.1" max="1">
+        </div>
+
+        <div class="control-group">
+            <label for="ballCount">Balls Count:</label>
+            <div class="stat-value" id="ballCount">0</div>
+            <div class="buttons">
+                <button id="clearBalls">Clear All</button>
+                <button id="addRandom">Add Random</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="board"></div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div>Active Balls</div>
+            <div class="stat-value" id="activeBalls">0</div>
+        </div>
+        <div class="stat-item">
+            <div>Max Velocity</div>
+            <div class="stat-value" id="maxVelocity">0</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Physics Simulation | Click to add balls | Adjust parameters for different effects</p>
+    </footer>
+
+    <script src="script.js">
+       
+    </script>
+</body>
+
+</html>

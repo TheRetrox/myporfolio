@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+      <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <style>
+
+   </style>
+</head>
+
+<body>
+    <div class="parent-container">
+        <div class="container">
+            <input type="text" placeholder="Search for a city..." class="con-1-search">
+            
+            <div class="con-2">
+                <div id="location">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p id="l-id"></p>
+                </div>
+
+                <div id="date">
+                    <p id="p-date"></p>
+                </div>
+
+                <div id="w-status">
+                    <div id="w-img"></div>
+                </div>
+
+                <div id="w-temp">
+                    <p id="t-id"></p>
+                </div>
+
+                <div id="box1">
+                    <i class="fa-solid fa-droplet"></i>
+                    <div class="con-p1">
+                        <p>Humidity</p>
+                        <p>75%</p>
+                    </div>
+                </div>
+
+                <div id="box2">
+                    <i class="fa-solid fa-wind"></i>
+                    <div class="con-p2">
+                        <p>Wind Speed</p>
+                        <p id="w-id">4.3M/s</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="con-img">
+                <div id="s-img"></div>
+                <h1>Search City</h1>
+                <p>Enter a city name to check the current weather conditions</p>
+            </div>
+            
+            <div class="loading-c"></div>
+
+            <div class="err">
+                <div class="err-content">
+                    <div class="err-icon">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h1>City Not Found</h1>
+                    <p>Please check the spelling and try again</p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>Weather App © 2025</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js">
+  
+    </script>
+</body>
+</html>
