@@ -165,6 +165,11 @@
             border-radius: 50%;
             position: absolute;
             box-shadow: 0px 0px 10px 1px var(--accent1);
+
+        }
+
+        .particles:hover {
+            background-color: white;
         }
 
         h1,
@@ -623,18 +628,26 @@
             position: relative;
             height: 300px;
             box-shadow: 0 5px 15px var(--shadow-color);
-            background: var(--project-gradient);
+            background: var(--card-bg);
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease, transform 0.8s ease, var(--transition);
         }
 
-        .project-image {
+        /* Updated Project Card with Icon */
+        .project-icon {
             width: 100%;
             height: 100%;
-            background-size: cover;
-            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: var(--transition);
+        }
+
+        .project-icon i {
+            font-size: 5rem;
+            color: var(--white);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .project-overlay {
@@ -646,7 +659,7 @@
             background: var(--project-overlay);
             transform: translateY(100%);
             transition: var(--transition);
-            color: white;
+            color: rgb(255, 255, 255);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -657,7 +670,7 @@
             transform: translateY(0);
         }
 
-        .project-card:hover .project-image {
+        .project-card:hover .project-icon {
             transform: scale(1.05);
         }
 
@@ -668,27 +681,40 @@
             font-weight: 400;
         }
 
-        /* Updated project button styling */
+        /* project button styling */
         .project-btn {
             display: inline-block;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.172);
+            padding: 12px 24px;
+            background: var(--accent1);
             border: 1px solid var(--white);
-            color: var(--white);
-            border-radius: 30px;
+            color: var(--bg);
+            border-radius: 8px;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
             text-decoration: none;
             margin: 5px;
             font-family: 'Inter', sans-serif;
+            position: relative;
+            clip-path: polygon(0 0,
+                    calc(100% - 10px) 0,
+                    100% 10px,
+                    100% 100%,
+                    10px 100%,
+                    0 calc(100% - 10px));
         }
 
         .project-btn:hover {
-            background: transparent;
-            color: var(--white);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            clip-path: polygon(10px 0,
+                    100% 0,
+                    100% calc(100% - 10px),
+                    calc(100% - 10px) 100%,
+                    0 100%,
+                    0 10px);
+            background: var(--accent2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 114, 255, 0.4);
         }
 
         /* Project buttons container for side-by-side layout */
@@ -902,17 +928,6 @@
 
         .mobile-nav.active {
             right: 0;
-            animation: borderchange 0.5s;
-        }
-
-        @keyframes borderchange {
-            0% {
-                width: 0%;
-            }
-
-            100% {
-                width: 280px;
-            }
         }
 
         .mobile-nav a {
@@ -1034,13 +1049,18 @@
             font-weight: 700;
         }
 
-        .popup-image {
+        .popup-icon {
             width: 100%;
-            height: 300px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 8px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-bottom: 1.5rem;
+        }
+
+        .popup-icon i {
+            font-size: 5rem;
+            color: var(--accent1);
         }
 
         .popup-description {
@@ -1503,8 +1523,12 @@
                 font-size: 1.5rem;
             }
 
-            .popup-image {
-                height: 200px;
+            .popup-icon {
+                height: 100px;
+            }
+
+            .popup-icon i {
+                font-size: 4rem;
             }
 
             .project-buttons {
@@ -1560,6 +1584,10 @@
                 width: 35px;
                 height: 35px;
                 font-size: 0.9rem;
+            }
+
+            .project-icon i {
+                font-size: 4rem;
             }
         }
 
@@ -1721,6 +1749,14 @@
             .speed-control-value {
                 font-size: 0.8rem;
             }
+
+            .project-icon i {
+                font-size: 3rem;
+            }
+
+            .popup-icon i {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
@@ -1784,7 +1820,7 @@
                 <i class="fas fa-times"></i>
             </button>
             <h2 class="customization-title">Animation Customization</h2>
-            
+
             <div class="customization-section">
                 <div class="customization-section-title">
                     <i class="fa-solid fa-water"></i>
@@ -1811,30 +1847,32 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="customization-section">
                 <div class="customization-section-title">
                     <i class="fa-solid fa-circle"></i>
                     <span>Particle Settings</span>
                 </div>
-                
+
                 <div class="slider-container">
                     <div class="slider-label">
                         <span class="slider-name">Particle Amount</span>
                         <span class="slider-value" id="particleAmountValue">50</span>
                     </div>
-                    <input type="range" min="10" max="100" value="10" class="customization-slider" id="particleAmountSlider">
+                    <input type="range" min="10" max="100" value="10" class="customization-slider"
+                        id="particleAmountSlider">
                 </div>
-                
+
                 <div class="slider-container" id="speedSliderContainer">
                     <div class="slider-label">
                         <span class="slider-name">Animation Speed</span>
                         <span class="slider-value" id="animationSpeedValue">2.0x</span>
                     </div>
-                    <input type="range" min="1" max="5" step="0.1" value="1" class="customization-slider" id="animationSpeedSlider">
+                    <input type="range" min="1" max="5" step="0.1" value="1" class="customization-slider"
+                        id="animationSpeedSlider">
                 </div>
             </div>
-            
+
             <div class="customization-actions">
                 <button class="customization-btn reset-btn" id="resetSettings">Reset to Default</button>
                 <button class="customization-btn apply-btn" id="applySettings">Apply Settings</button>
@@ -1965,7 +2003,9 @@
             </div>
             <div class="projects-container">
                 <div class="project-card">
-                    <div class="project-image" style="background-image: url('img/weatherimg.png');"></div>
+                    <div class="project-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
                     <div class="project-overlay">
                         <h3>Weather App</h3>
                         <p>A responsive weather application that displays current weather conditions and forecasts.</p>
@@ -1976,7 +2016,9 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image" style="background-image: url('img/tic-tac-img.png');"></div>
+                    <div class="project-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
                     <div class="project-overlay">
                         <h3>Tic Tac Toe</h3>
                         <p>An interactive game with smooth animations and responsive design.</p>
@@ -1987,7 +2029,9 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image" style="background-image: url('img/gravitySimu.png');"></div>
+                    <div class="project-icon">
+                        <i class="fas fa-meteor"></i>
+                    </div>
                     <div class="project-overlay">
                         <h3>Gravity Simulator</h3>
                         <p>A physics-based simulation demonstrating gravitational interactions.</p>
@@ -1998,7 +2042,9 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image" style="background-image: url('img/snakegameimg.png');"></div>
+                    <div class="project-icon">
+                        <i class="fa-solid fa-staff-snake"></i>
+                    </div>
                     <div class="project-overlay">
                         <h3>Snake Game</h3>
                         <p>Classic Snake game: eat, grow, and avoid collisions.</p>
@@ -2009,7 +2055,9 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image" style="background-image: url('img/flappybirdimg.png');"></div>
+                    <div class="project-icon">
+                        <i class="fas fa-dove"></i>
+                    </div>
                     <div class="project-overlay">
                         <h3>Flappy Bird</h3>
                         <p>Flappy Bird game: tap to fly and dodge obstacles.</p>
@@ -2020,7 +2068,9 @@
                     </div>
                 </div>
                 <div class="project-card">
-                    <div class="project-image" style="background-image: url('img/spaceshotter.png');"></div>
+                    <div class="project-icon">
+                        <i class="fas fa-space-shuttle"></i>
+                    </div>
                     <div class="project-overlay">
                         <h3>Space Shooter</h3>
                         <p>Space Shooter game: tap to shoot and dodge enemies.</p>
@@ -2159,7 +2209,9 @@
                 <i class="fas fa-times"></i>
             </button>
             <h2 class="popup-title" id="popupTitle">Project Title</h2>
-            <div class="popup-image" id="popupImage"></div>
+            <div class="popup-icon" id="popupIcon">
+                <i class="fas fa-cloud-sun"></i>
+            </div>
             <div class="popup-description" id="popupDescription">
                 Project description will appear here.
             </div>
@@ -2175,625 +2227,629 @@
 
     <script>
         // Background Animation Mode State
-let animationMode = 'flow'; // 'flow', 'gravity', or 'off'
-let particleAmount = 10;
-let animationSpeed = 1;
+        let animationMode = 'flow'; // 'flow', 'gravity', or 'off'
+        let particleAmount = 10;
+        let animationSpeed = 1;
 
-// Theme Management
-const allThemes = [
-    'theme-default',
-    'purpled',
-    'orangeCharcoal',
-    'crimsonNight',
-    'goldObsidian'
-];
+        // Theme Management
+        const allThemes = [
+            'theme-default',
+            'purpled',
+            'orangeCharcoal',
+            'crimsonNight',
+            'goldObsidian'
+        ];
 
-let currentThemeIndex = 0;
+        let currentThemeIndex = 0;
 
-function changeTheme() {
-    currentThemeIndex++;
-    if (currentThemeIndex >= allThemes.length) currentThemeIndex = 0;
-    document.documentElement.className = allThemes[currentThemeIndex];
-    localStorage.setItem('currentTheme', currentThemeIndex);
-}
-
-// Project details data
-const projectData = {
-    weather: {
-        title: "Weather App",
-        image: "img/weatherimg.png",
-        description: "A responsive weather application that displays current weather conditions and forecasts. This app uses the OpenWeather API to fetch real-time weather data and presents it in a clean, user-friendly interface. Features include location-based weather, 5-day forecast, and temperature unit conversion.",
-        tech: ["HTML", "CSS", "JavaScript", "API Integration"],
-        liveLink: "weatherapp.html",
-        codeLink: "#"
-    },
-    tictactoe: {
-        title: "Tic Tac Toe",
-        image: "img/tic-tac-img.png",
-        description: "An interactive Tic Tac Toe game with smooth animations and responsive design. This implementation includes player vs player mode, win detection, and game statistics. The interface is designed to be intuitive and visually appealing with subtle animations for game actions.",
-        tech: ["HTML", "CSS", "JavaScript", "DOM Manipulation"],
-        liveLink: "tic-tac-index.html",
-        codeLink: "#"
-    },
-    gravity: {
-        title: "Gravity Simulator",
-        image: "img/gravitySimu.png",
-        description: "A semi-realistic Earth gravity simulation that models gravitational forces between celestial bodies using Newton's law of universal gravitation. This simulation allows users to adjust parameters like mass, velocity, and gravitational constant to observe their effects on orbital mechanics. Features include real-time visualization of gravitational interactions, adjustable time scales, and collision detection. The simulation provides educational insights into planetary motion and space dynamics.",
-        tech: ["HTML", "CSS", "JavaScript", "Canvas API", "Physics Simulation"],
-        liveLink: "gravity-simu-index.html",
-        codeLink: "#"
-    },
-    snake: {
-        title: "Snake Game",
-        image: "img/snakegameimg.png",
-        description: "A classic Snake game implementation where players control a growing snake to collect food while avoiding collisions. Features include score tracking, increasing difficulty as the snake grows, and responsive controls. The game includes visual feedback for game events and a clean, modern interface.",
-        tech: ["HTML", "CSS", "JavaScript", "Game Development"],
-        liveLink: "Snake Game/snakegame.html",
-        codeLink: "#"
-    },
-    flappybird: {
-        title: "Flappy Bird",
-        image: "img/flappybirdimg.png",
-        description: "A recreation of the popular Flappy Bird game where players tap to keep the bird flying through obstacles. This implementation includes score tracking, collision detection, and procedurally generated obstacles. The game features smooth animations and responsive controls suitable for all devices.",
-        tech: ["HTML", "CSS", "JavaScript", "Game Development", "Collision Detection"],
-        liveLink: "Flappy-Bird/flappybird.html",
-        codeLink: "#"
-    },
-    spaceshooter: {
-        title: "Space Shooter",
-        image: "img/spaceshotter.png",
-        description: "An engaging space shooter game where players control a spaceship to shoot enemies and dodge obstacles. Features include multiple enemy types, power-ups, score tracking, and increasing difficulty levels. The game includes particle effects for explosions and smooth ship movement.",
-        tech: ["HTML", "CSS", "JavaScript", "Game Development", "Canvas Rendering"],
-        liveLink: "spaceshooter/spaceshooter.html",
-        codeLink: "#"
-    }
-};
-
-// Project Popup Functions
-function showProjectDetails(projectId) {
-    const project = projectData[projectId];
-    if (!project) return;
-
-    document.getElementById('popupTitle').textContent = project.title;
-    document.getElementById('popupImage').style.backgroundImage = `url('${project.image}')`;
-    document.getElementById('popupDescription').textContent = project.description;
-
-    const techContainer = document.getElementById('popupTech');
-    techContainer.innerHTML = '';
-    project.tech.forEach(tech => {
-        const techTag = document.createElement('span');
-        techTag.className = 'tech-tag';
-        techTag.textContent = tech;
-        techContainer.appendChild(techTag);
-    });
-
-    document.getElementById('popupLiveLink').href = project.liveLink;
-    document.getElementById('popupCodeLink').href = project.codeLink;
-
-    document.getElementById('projectPopup').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeProjectDetails() {
-    document.getElementById('projectPopup').classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-// Customization Popup Functions
-function openCustomizationPopup() {
-    document.getElementById('customizationPopup').classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeCustomizationPopup() {
-    document.getElementById('customizationPopup').classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-function updateCustomizationUI() {
-    // Update mode selector
-    const modeOptions = document.querySelectorAll('.mode-option');
-    modeOptions.forEach(option => {
-        option.classList.remove('active');
-        if (option.dataset.mode === animationMode) {
-            option.classList.add('active');
+        function changeTheme() {
+            currentThemeIndex++;
+            if (currentThemeIndex >= allThemes.length) currentThemeIndex = 0;
+            document.documentElement.className = allThemes[currentThemeIndex];
+            localStorage.setItem('currentTheme', currentThemeIndex);
         }
-    });
-    
-    // Update sliders
-    const particleAmountSlider = document.getElementById('particleAmountSlider');
-    const particleAmountValue = document.getElementById('particleAmountValue');
-    const animationSpeedSlider = document.getElementById('animationSpeedSlider');
-    const animationSpeedValue = document.getElementById('animationSpeedValue');
-    
-    if (particleAmountSlider && particleAmountValue) {
-        particleAmountSlider.value = particleAmount;
-        particleAmountValue.textContent = particleAmount;
-    }
-    
-    if (animationSpeedSlider && animationSpeedValue) {
-        animationSpeedSlider.value = animationSpeed;
-        animationSpeedValue.textContent = animationSpeed.toFixed(1) + 'x';
-    }
-    
-    // Show/hide speed slider based on mode - with null checks
-    const speedSliderContainer = document.getElementById('speedSliderContainer');
-    if (speedSliderContainer) {
-        if (animationMode === 'flow') {
-            speedSliderContainer.style.display = 'block';
-        } else {
-            speedSliderContainer.style.display = 'none';
-        }
-    }
-    
-    // Show/hide particle amount slider based on mode - with null checks
-    const sliderContainers = document.querySelectorAll('.slider-container');
-    const particleAmountContainer = sliderContainers[0]; // First slider container
-    if (particleAmountContainer) {
-        if (animationMode !== 'off') {
-            particleAmountContainer.style.display = 'block';
-        } else {
-            particleAmountContainer.style.display = 'none';
-        }
-    }
-}
 
-function applyCustomizationSettings() {
-    // Get selected mode
-    const activeMode = document.querySelector('.mode-option.active');
-    if (activeMode) {
-        animationMode = activeMode.dataset.mode;
-    }
-    
-    // Get particle amount
-    const particleAmountSlider = document.getElementById('particleAmountSlider');
-    if (particleAmountSlider) {
-        particleAmount = parseInt(particleAmountSlider.value);
-    }
-    
-    // Get animation speed
-    const animationSpeedSlider = document.getElementById('animationSpeedSlider');
-    if (animationSpeedSlider) {
-        animationSpeed = parseFloat(animationSpeedSlider.value);
-    }
-    
-    // Update animation
-    clearParticles();
-    maxLimit = 0;
-    
-    // Close popup
-    closeCustomizationPopup();
-}
-
-function resetCustomizationSettings() {
-    // Reset to default values
-    animationMode = 'flow';
-    particleAmount = 10;
-    animationSpeed = 1;
-    
-    // Update UI
-    updateCustomizationUI();
-    
-    // Apply settings
-    applyCustomizationSettings();
-}
-
-// Clear all particles
-function clearParticles() {
-    const bg = document.querySelector(".fixed-bg");
-    if (!bg) return;
-    
-    const particles = document.querySelectorAll('.particles');
-    particles.forEach(particle => {
-        if (particle.parentNode === bg) {
-            bg.removeChild(particle);
-        }
-    });
-    
-    // Reset particle arrays
-    allp = [];
-    allpPosition = [];
-    randomDir = [];
-    allvelo = [];
-    dirval = [];
-    maxLimit = 0;
-}
-
-// Initialize everything when DOM is loaded
-document.addEventListener('DOMContentLoaded', function () {
-    // Typed.js initialization
-    const typedElement = document.querySelector('.text');
-    if (typedElement) {
-        const typed = new Typed('.text', {
-            strings: ["Frontend Developer", "Creative Coder", "Web Designer"],
-            typeSpeed: 100,
-            backSpeed: 100,
-            backDelay: 1000,
-            loop: true
-        });
-    }
-
-    // Mobile menu functionality
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    const closeMenu = document.getElementById('closeMenu');
-    const overlay = document.getElementById('overlay');
-
-    function openMobileMenu() {
-        if (mobileNav) mobileNav.classList.add('active');
-        if (overlay) overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeMobileMenu() {
-        if (mobileNav) mobileNav.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', openMobileMenu);
-    }
-    if (closeMenu) {
-        closeMenu.addEventListener('click', closeMobileMenu);
-    }
-    if (overlay) {
-        overlay.addEventListener('click', closeMobileMenu);
-    }
-
-    const mobileLinks = document.querySelectorAll('.mobile-nav a');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', closeMobileMenu);
-    });
-
-    // Header scroll effect
-    window.addEventListener('scroll', function () {
-        const header = document.querySelector('header');
-        if (header) {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+        // Project details data
+        const projectData = {
+            weather: {
+                title: "Weather App",
+                icon: "fas fa-cloud-sun",
+                description: "A responsive weather application that displays current weather conditions and forecasts. This app uses the OpenWeather API to fetch real-time weather data and presents it in a clean, user-friendly interface. Features include location-based weather, 5-day forecast, and temperature unit conversion.",
+                tech: ["HTML", "CSS", "JavaScript", "API Integration"],
+                liveLink: "weatherapp.html",
+                codeLink: "#"
+            },
+            tictactoe: {
+                title: "Tic Tac Toe",
+                icon: "fas fa-times-circle",
+                description: "An interactive Tic Tac Toe game with smooth animations and responsive design. This implementation includes player vs player mode, win detection, and game statistics. The interface is designed to be intuitive and visually appealing with subtle animations for game actions.",
+                tech: ["HTML", "CSS", "JavaScript", "DOM Manipulation"],
+                liveLink: "tic-tac-index.html",
+                codeLink: "#"
+            },
+            gravity: {
+                title: "Gravity Simulator",
+                icon: "fas fa-meteor",
+                description: "A semi-realistic Earth gravity simulation that models gravitational forces between celestial bodies using Newton's law of universal gravitation. This simulation allows users to adjust parameters like mass, velocity, and gravitational constant to observe their effects on orbital mechanics. Features include real-time visualization of gravitational interactions, adjustable time scales, and collision detection. The simulation provides educational insights into planetary motion and space dynamics.",
+                tech: ["HTML", "CSS", "JavaScript", "Canvas API", "Physics Simulation"],
+                liveLink: "gravity-simu-index.html",
+                codeLink: "#"
+            },
+            snake: {
+                title: "Snake Game",
+                icon: "fas fa-otter",
+                description: "A classic Snake game implementation where players control a growing snake to collect food while avoiding collisions. Features include score tracking, increasing difficulty as the snake grows, and responsive controls. The game includes visual feedback for game events and a clean, modern interface.",
+                tech: ["HTML", "CSS", "JavaScript", "Game Development"],
+                liveLink: "Snake Game/snakegame.html",
+                codeLink: "#"
+            },
+            flappybird: {
+                title: "Flappy Bird",
+                icon: "fas fa-dove",
+                description: "A recreation of the popular Flappy Bird game where players tap to keep the bird flying through obstacles. This implementation includes score tracking, collision detection, and procedurally generated obstacles. The game features smooth animations and responsive controls suitable for all devices.",
+                tech: ["HTML", "CSS", "JavaScript", "Game Development", "Collision Detection"],
+                liveLink: "Flappy-Bird/flappybird.html",
+                codeLink: "#"
+            },
+            spaceshooter: {
+                title: "Space Shooter",
+                icon: "fas fa-space-shuttle",
+                description: "An engaging space shooter game where players control a spaceship to shoot enemies and dodge obstacles. Features include multiple enemy types, power-ups, score tracking, and increasing difficulty levels. The game includes particle effects for explosions and smooth ship movement.",
+                tech: ["HTML", "CSS", "JavaScript", "Game Development", "Canvas Rendering"],
+                liveLink: "spaceshooter/spaceshooter.html",
+                codeLink: "#"
             }
+        };
+
+        // Project Popup Functions
+        function showProjectDetails(projectId) {
+            const project = projectData[projectId];
+            if (!project) return;
+
+            document.getElementById('popupTitle').textContent = project.title;
+
+            // Set icon instead of image
+            const popupIcon = document.getElementById('popupIcon');
+            popupIcon.innerHTML = `<i class="${project.icon}"></i>`;
+
+            document.getElementById('popupDescription').textContent = project.description;
+
+            const techContainer = document.getElementById('popupTech');
+            techContainer.innerHTML = '';
+            project.tech.forEach(tech => {
+                const techTag = document.createElement('span');
+                techTag.className = 'tech-tag';
+                techTag.textContent = tech;
+                techContainer.appendChild(techTag);
+            });
+
+            document.getElementById('popupLiveLink').href = project.liveLink;
+            document.getElementById('popupCodeLink').href = project.codeLink;
+
+            document.getElementById('projectPopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
-        animateOnScroll();
-    });
 
-    // Theme initialization
-    const savedTheme = localStorage.getItem('currentTheme');
-    if (savedTheme !== null) {
-        currentThemeIndex = parseInt(savedTheme, 10);
-        document.documentElement.className = allThemes[currentThemeIndex];
-    } else {
-        document.documentElement.className = allThemes[0];
-        currentThemeIndex = 0;
-    }
+        function closeProjectDetails() {
+            document.getElementById('projectPopup').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
 
-    // Theme toggle buttons
-    const moreThemeToggle = document.getElementById('moreThemeToggle');
-    if (moreThemeToggle) {
-        moreThemeToggle.addEventListener('click', changeTheme);
-    }
-    
-    const mobileThemeToggle = document.getElementById('mobileThemeToggle');
-    if (mobileThemeToggle) {
-        mobileThemeToggle.addEventListener('click', function () {
-            changeTheme();
-            closeMobileMenu();
-        });
-    }
+        // Customization Popup Functions
+        function openCustomizationPopup() {
+            document.getElementById('customizationPopup').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
 
-    // Customization buttons
-    const customizeToggle = document.getElementById('customizeToggle');
-    if (customizeToggle) {
-        customizeToggle.addEventListener('click', openCustomizationPopup);
-    }
-    
-    const mobileCustomizeToggle = document.getElementById('mobileCustomizeToggle');
-    if (mobileCustomizeToggle) {
-        mobileCustomizeToggle.addEventListener('click', function () {
-            openCustomizationPopup();
-            closeMobileMenu();
-        });
-    }
-    
-    // Customization popup events
-    const customizationClose = document.getElementById('customizationClose');
-    if (customizationClose) {
-        customizationClose.addEventListener('click', closeCustomizationPopup);
-    }
-    
-    const applySettings = document.getElementById('applySettings');
-    if (applySettings) {
-        applySettings.addEventListener('click', applyCustomizationSettings);
-    }
-    
-    const resetSettings = document.getElementById('resetSettings');
-    if (resetSettings) {
-        resetSettings.addEventListener('click', resetCustomizationSettings);
-    }
-    
-    // Mode selector
-    document.querySelectorAll('.mode-option').forEach(option => {
-        option.addEventListener('click', function() {
-            document.querySelectorAll('.mode-option').forEach(opt => opt.classList.remove('active'));
-            this.classList.add('active');
-            
-   
-            const selectedMode = this.dataset.mode;
+        function closeCustomizationPopup() {
+            document.getElementById('customizationPopup').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateCustomizationUI() {
+            // Update mode selector
+            const modeOptions = document.querySelectorAll('.mode-option');
+            modeOptions.forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.mode === animationMode) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Update sliders
+            const particleAmountSlider = document.getElementById('particleAmountSlider');
+            const particleAmountValue = document.getElementById('particleAmountValue');
+            const animationSpeedSlider = document.getElementById('animationSpeedSlider');
+            const animationSpeedValue = document.getElementById('animationSpeedValue');
+
+            if (particleAmountSlider && particleAmountValue) {
+                particleAmountSlider.value = particleAmount;
+                particleAmountValue.textContent = particleAmount;
+            }
+
+            if (animationSpeedSlider && animationSpeedValue) {
+                animationSpeedSlider.value = animationSpeed;
+                animationSpeedValue.textContent = animationSpeed.toFixed(1) + 'x';
+            }
+
+            // Show/hide speed slider based on mode - with null checks
             const speedSliderContainer = document.getElementById('speedSliderContainer');
-            const sliderContainers = document.querySelectorAll('.slider-container');
-            const particleAmountContainer = sliderContainers[0];
-            
             if (speedSliderContainer) {
-                if (selectedMode === 'flow') {
+                if (animationMode === 'flow') {
                     speedSliderContainer.style.display = 'block';
                 } else {
                     speedSliderContainer.style.display = 'none';
                 }
             }
-            
+
+            // Show/hide particle amount slider based on mode - with null checks
+            const sliderContainers = document.querySelectorAll('.slider-container');
+            const particleAmountContainer = sliderContainers[0]; // First slider container
             if (particleAmountContainer) {
-                if (selectedMode !== 'off') {
+                if (animationMode !== 'off') {
                     particleAmountContainer.style.display = 'block';
                 } else {
                     particleAmountContainer.style.display = 'none';
                 }
             }
-        });
-    });
-    
-    // Slider updates
-    const particleAmountSlider = document.getElementById('particleAmountSlider');
-    if (particleAmountSlider) {
-        particleAmountSlider.addEventListener('input', function() {
-            const particleAmountValue = document.getElementById('particleAmountValue');
-            if (particleAmountValue) {
-                particleAmountValue.textContent = this.value;
+        }
+
+        function applyCustomizationSettings() {
+            // Get selected mode
+            const activeMode = document.querySelector('.mode-option.active');
+            if (activeMode) {
+                animationMode = activeMode.dataset.mode;
             }
-        });
-    }
-    
-    const animationSpeedSlider = document.getElementById('animationSpeedSlider');
-    if (animationSpeedSlider) {
-        animationSpeedSlider.addEventListener('input', function() {
-            const animationSpeedValue = document.getElementById('animationSpeedValue');
-            if (animationSpeedValue) {
-                animationSpeedValue.textContent = parseFloat(this.value).toFixed(1) + 'x';
+
+            // Get particle amount
+            const particleAmountSlider = document.getElementById('particleAmountSlider');
+            if (particleAmountSlider) {
+                particleAmount = parseInt(particleAmountSlider.value);
             }
-        });
-    }
 
-    // Initialize skill bars with their values
-    document.querySelectorAll('.skill-progress').forEach(progress => {
-        const width = progress.getAttribute('data-width');
-        progress.style.width = width + '%';
-    });
+            // Get animation speed
+            const animationSpeedSlider = document.getElementById('animationSpeedSlider');
+            if (animationSpeedSlider) {
+                animationSpeed = parseFloat(animationSpeedSlider.value);
+            }
 
-    // Project detail buttons
-    document.querySelectorAll('.project-btn[data-project]').forEach(button => {
-        button.addEventListener('click', function () {
-            const projectId = this.getAttribute('data-project');
-            showProjectDetails(projectId);
-        });
-    });
+            // Update animation
+            clearParticles();
+            maxLimit = 0;
 
-    // Popup close button
-    const popupClose = document.getElementById('popupClose');
-    if (popupClose) {
-        popupClose.addEventListener('click', closeProjectDetails);
-    }
+            // Close popup
+            closeCustomizationPopup();
+        }
 
-    // Contact form submission
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
-        });
-    }
+        function resetCustomizationSettings() {
+            // Reset to default values
+            animationMode = 'flow';
+            particleAmount = 10;
+            animationSpeed = 1;
 
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                window.scrollTo({
-                    top: targetElement.offsetTop - 80,
-                    behavior: 'smooth'
+            // Update UI
+            updateCustomizationUI();
+
+            // Apply settings
+            applyCustomizationSettings();
+        }
+
+        // Clear all particles
+        function clearParticles() {
+            const bg = document.querySelector(".fixed-bg");
+            if (!bg) return;
+
+            const particles = document.querySelectorAll('.particles');
+            particles.forEach(particle => {
+                if (particle.parentNode === bg) {
+                    bg.removeChild(particle);
+                }
+            });
+
+            // Reset particle arrays
+            allp = [];
+            allpPosition = [];
+            randomDir = [];
+            allvelo = [];
+            dirval = [];
+            maxLimit = 0;
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            // Typed.js initialization
+            const typedElement = document.querySelector('.text');
+            if (typedElement) {
+                const typed = new Typed('.text', {
+                    strings: ["Frontend Developer", "Creative Coder", "Web Developer"],
+                    typeSpeed: 100,
+                    backSpeed: 100,
+                    backDelay: 1000,
+                    loop: true
                 });
             }
-        });
-    });
 
-    // Fetch GitHub data
-    const exp = document.querySelector("#exp");
-    const repo = document.querySelector("#repo");
-    const proj = document.querySelector("#lan");
+            // Mobile menu functionality
+            const menuToggle = document.getElementById('menuToggle');
+            const mobileNav = document.getElementById('mobileNav');
+            const closeMenu = document.getElementById('closeMenu');
+            const overlay = document.getElementById('overlay');
 
-    if (exp && repo && proj) {
-        fetch("https://api.github.com/users/TheRetrox")
-            .then(res => res.json())
-            .then(data => {
-                const createdDate = new Date(data.created_at);
-                const today = new Date();
-                const ageInYears = (today - createdDate) / (1000 * 60 * 60 * 24 * 365);
+            function openMobileMenu() {
+                if (mobileNav) mobileNav.classList.add('active');
+                if (overlay) overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
 
-                exp.innerText = ageInYears.toFixed(1);
-                repo.innerText = data.public_repos;
-                proj.innerText = 27;
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                // Set default values if API call fails
-                exp.innerText = "2";
-                repo.innerText = "15";
-                proj.innerText = "27";
+            function closeMobileMenu() {
+                if (mobileNav) mobileNav.classList.remove('active');
+                if (overlay) overlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            if (menuToggle) {
+                menuToggle.addEventListener('click', openMobileMenu);
+            }
+            if (closeMenu) {
+                closeMenu.addEventListener('click', closeMobileMenu);
+            }
+            if (overlay) {
+                overlay.addEventListener('click', closeMobileMenu);
+            }
+
+            const mobileLinks = document.querySelectorAll('.mobile-nav a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
             });
-    }
 
-    // Initialize customization UI
-    updateCustomizationUI();
+            // Header scroll effect
+            window.addEventListener('scroll', function () {
+                const header = document.querySelector('header');
+                if (header) {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                }
+                animateOnScroll();
+            });
 
-    // Initial animation trigger
-    animateOnScroll();
-});
+            // Theme initialization
+            const savedTheme = localStorage.getItem('currentTheme');
+            if (savedTheme !== null) {
+                currentThemeIndex = parseInt(savedTheme, 10);
+                document.documentElement.className = allThemes[currentThemeIndex];
+            } else {
+                document.documentElement.className = allThemes[0];
+                currentThemeIndex = 0;
+            }
 
-// Profile image change function
-function changeImage(url) {
-    const profileImage = document.getElementById('profileImage');
-    if (profileImage) {
-        profileImage.style.backgroundImage = `url('${url}')`;
-    }
-}
+            // Theme toggle buttons
+            const moreThemeToggle = document.getElementById('moreThemeToggle');
+            if (moreThemeToggle) {
+                moreThemeToggle.addEventListener('click', changeTheme);
+            }
 
-// Scroll animation function
-function animateOnScroll() {
-    const elementsToAnimate = document.querySelectorAll(
-        '.section-title h1, .about-image, .about-text, .skill-card, .project-card, .skill-item, .contact-form, .form-group, .sub-btn, .contact-info'
-    );
+            const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+            if (mobileThemeToggle) {
+                mobileThemeToggle.addEventListener('click', function () {
+                    changeTheme();
+                    closeMobileMenu();
+                });
+            }
 
-    elementsToAnimate.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
+            // Customization buttons
+            const customizeToggle = document.getElementById('customizeToggle');
+            if (customizeToggle) {
+                customizeToggle.addEventListener('click', openCustomizationPopup);
+            }
 
-        if (elementTop < windowHeight - 100) {
-            element.classList.add('animate');
+            const mobileCustomizeToggle = document.getElementById('mobileCustomizeToggle');
+            if (mobileCustomizeToggle) {
+                mobileCustomizeToggle.addEventListener('click', function () {
+                    openCustomizationPopup();
+                    closeMobileMenu();
+                });
+            }
+
+            // Customization popup events
+            const customizationClose = document.getElementById('customizationClose');
+            if (customizationClose) {
+                customizationClose.addEventListener('click', closeCustomizationPopup);
+            }
+
+            const applySettings = document.getElementById('applySettings');
+            if (applySettings) {
+                applySettings.addEventListener('click', applyCustomizationSettings);
+            }
+
+            const resetSettings = document.getElementById('resetSettings');
+            if (resetSettings) {
+                resetSettings.addEventListener('click', resetCustomizationSettings);
+            }
+
+            // Mode selector
+            document.querySelectorAll('.mode-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    document.querySelectorAll('.mode-option').forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+
+
+                    const selectedMode = this.dataset.mode;
+                    const speedSliderContainer = document.getElementById('speedSliderContainer');
+                    const sliderContainers = document.querySelectorAll('.slider-container');
+                    const particleAmountContainer = sliderContainers[0];
+
+                    if (speedSliderContainer) {
+                        if (selectedMode === 'flow') {
+                            speedSliderContainer.style.display = 'block';
+                        } else {
+                            speedSliderContainer.style.display = 'none';
+                        }
+                    }
+
+                    if (particleAmountContainer) {
+                        if (selectedMode !== 'off') {
+                            particleAmountContainer.style.display = 'block';
+                        } else {
+                            particleAmountContainer.style.display = 'none';
+                        }
+                    }
+                });
+            });
+
+            // Slider updates
+            const particleAmountSlider = document.getElementById('particleAmountSlider');
+            if (particleAmountSlider) {
+                particleAmountSlider.addEventListener('input', function () {
+                    const particleAmountValue = document.getElementById('particleAmountValue');
+                    if (particleAmountValue) {
+                        particleAmountValue.textContent = this.value;
+                    }
+                });
+            }
+
+            const animationSpeedSlider = document.getElementById('animationSpeedSlider');
+            if (animationSpeedSlider) {
+                animationSpeedSlider.addEventListener('input', function () {
+                    const animationSpeedValue = document.getElementById('animationSpeedValue');
+                    if (animationSpeedValue) {
+                        animationSpeedValue.textContent = parseFloat(this.value).toFixed(1) + 'x';
+                    }
+                });
+            }
+
+            // Initialize skill bars with their values
+            document.querySelectorAll('.skill-progress').forEach(progress => {
+                const width = progress.getAttribute('data-width');
+                progress.style.width = width + '%';
+            });
+
+            // Project detail buttons
+            document.querySelectorAll('.project-btn[data-project]').forEach(button => {
+                button.addEventListener('click', function () {
+                    const projectId = this.getAttribute('data-project');
+                    showProjectDetails(projectId);
+                });
+            });
+
+            // Popup close button
+            const popupClose = document.getElementById('popupClose');
+            if (popupClose) {
+                popupClose.addEventListener('click', closeProjectDetails);
+            }
+
+            // Contact form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    alert('Thank you for your message! I will get back to you soon.');
+                    this.reset();
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Fetch GitHub data
+            const exp = document.querySelector("#exp");
+            const repo = document.querySelector("#repo");
+            const proj = document.querySelector("#lan");
+
+            if (exp && repo && proj) {
+                fetch("https://api.github.com/users/TheRetrox")
+                    .then(res => res.json())
+                    .then(data => {
+                        const createdDate = new Date(data.created_at);
+                        const today = new Date();
+                        const ageInYears = (today - createdDate) / (1000 * 60 * 60 * 24 * 365);
+
+                        exp.innerText = ageInYears.toFixed(1);
+                        repo.innerText = data.public_repos;
+                        proj.innerText = 27;
+                    })
+                    .catch(err => {
+                        console.error("Error:", err);
+                        // Set default values if API call fails
+                        exp.innerText = "2";
+                        repo.innerText = "15";
+                        proj.innerText = "27";
+                    });
+            }
+
+            // Initialize customization UI
+            updateCustomizationUI();
+
+            // Initial animation trigger
+            animateOnScroll();
+        });
+
+        // Profile image change function
+        function changeImage(url) {
+            const profileImage = document.getElementById('profileImage');
+            if (profileImage) {
+                profileImage.style.backgroundImage = `url('${url}')`;
+            }
         }
-    });
-}
 
-// Background particles animation
-const bg = document.querySelector(".fixed-bg");
+        // Scroll animation function
+        function animateOnScroll() {
+            const elementsToAnimate = document.querySelectorAll(
+                '.section-title h1, .about-image, .about-text, .skill-card, .project-card, .skill-item, .contact-form, .form-group, .sub-btn, .contact-info'
+            );
 
-let allp = [];
-let allpPosition = [];
-let randomDir = [];
-let maxLimit = 0;
+            elementsToAnimate.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
 
-// Gravity animation variables
-let allvelo = [];
-let g = 0.1;
-let dirval = [];
-
-function gameloop() {
-    if (animationMode === 'off') {
-        // Don't create or update particles
-        requestAnimationFrame(gameloop);
-        return;
-    }
-    
-    if (animationMode === 'flow') {
-        if (maxLimit < particleAmount) {
-            createP();
-            maxLimit++;
-        }
-        updateAnimation();
-    } else if (animationMode === 'gravity') {
-        if (maxLimit < particleAmount) {
-            createPgravity();
-            maxLimit++;
-        }
-        applygravity();
-    }
-
-    requestAnimationFrame(gameloop);
-}
-
-function updateAnimation() {
-    for (let i = 0; i < allp.length; i++) {
-        let pos = allpPosition[i];
-        let baseDir = randomDir[i];
-
-        // Apply speed multiplier here 
-        pos.x += baseDir.dx * animationSpeed;
-        pos.y += baseDir.dy * animationSpeed;
-
-        // Bounce off edges
-        if (pos.x <= 0 || pos.x >= bg.clientWidth) baseDir.dx *= -1;
-        if (pos.y <= 0 || pos.y >= bg.clientHeight) baseDir.dy *= -1;
-
-        allp[i].style.left = pos.x + "px";
-        allp[i].style.top = pos.y + "px";
-    }
-}
-
-function createP() {
-    if (!bg) return;
-    
-    let x = Math.random() * bg.clientWidth;
-    let y = Math.random() * bg.clientHeight;
-    let w = Math.random() * 5 + 2;
-
-    let particle = document.createElement("div");
-    particle.classList.add('particles');
-    particle.style.width = w + 'px';
-    particle.style.height = w + 'px';
-    bg.appendChild(particle);
-
-    allp.push(particle);
-    allpPosition.push({ x: x, y: y });
-
-    // Base speed (no speedControl yet)
-    let baseSpeedX = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
-    let baseSpeedY = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
-    randomDir.push({ dx: baseSpeedX, dy: baseSpeedY });
-}
-
-function createPgravity() {
-    if (!bg) return;
-    
-    let x = Math.random() * bg.clientWidth;
-    let y = Math.random() * bg.clientHeight;
-    let w = Math.random() * 10 + 2;
-    let particle = document.createElement("div");
-    particle.classList.add('particles');
-    particle.style.width = w + 'px';
-    particle.style.height = w + 'px';
-    bg.appendChild(particle);
-    allp.push(particle);
-    allpPosition.push({ x: x, y: y });
-    allvelo.push(0.1);
-
-    let dirluck = Math.floor(Math.random() * 2);
-    if (dirluck == 1) {
-        dirval.push(-5);
-    } else {
-        dirval.push(5);
-    }
-}
-
-function applygravity() {
-    for (let i = 0; i < allvelo.length; i++) {
-        allpPosition[i].y += allvelo[i];
-        allpPosition[i].x += dirval[i];
-        allp[i].style.top = allpPosition[i].y + "px";
-        allp[i].style.left = allpPosition[i].x + "px";
-
-        // Collision
-        if (allpPosition[i].x <= 0) {
-            dirval[i] = Math.abs(dirval[i]);
-        }
-        if (allpPosition[i].x >= bg.clientWidth) {
-            dirval[i] = -dirval[i];
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('animate');
+                }
+            });
         }
 
-        if (allpPosition[i].y >= bg.clientHeight) {
-            allvelo[i] = -allvelo[i];
-        } else {
-            allvelo[i] += g;
-        }
-    }
-}
+        // Background particles animation
+        const bg = document.querySelector(".fixed-bg");
 
-// Start the game loop if bg exists
-if (bg) {
-    requestAnimationFrame(gameloop);
-}
+        let allp = [];
+        let allpPosition = [];
+        let randomDir = [];
+        let maxLimit = 0;
+
+        // Gravity animation variables
+        let allvelo = [];
+        let g = 0.1;
+        let dirval = [];
+
+        function gameloop() {
+            if (animationMode === 'off') {
+                // Don't create or update particles
+                requestAnimationFrame(gameloop);
+                return;
+            }
+
+            if (animationMode === 'flow') {
+                if (maxLimit < particleAmount) {
+                    createP();
+                    maxLimit++;
+                }
+                updateAnimation();
+            } else if (animationMode === 'gravity') {
+                if (maxLimit < particleAmount) {
+                    createPgravity();
+                    maxLimit++;
+                }
+                applygravity();
+            }
+
+            requestAnimationFrame(gameloop);
+        }
+
+        function updateAnimation() {
+            for (let i = 0; i < allp.length; i++) {
+                let pos = allpPosition[i];
+                let baseDir = randomDir[i];
+
+                // Apply speed multiplier here 
+                pos.x += baseDir.dx * animationSpeed;
+                pos.y += baseDir.dy * animationSpeed;
+
+                // Bounce off edges
+                if (pos.x <= 0 || pos.x >= bg.clientWidth) baseDir.dx *= -1;
+                if (pos.y <= 0 || pos.y >= bg.clientHeight) baseDir.dy *= -1;
+
+                allp[i].style.left = pos.x + "px";
+                allp[i].style.top = pos.y + "px";
+            }
+        }
+
+        function createP() {
+            if (!bg) return;
+
+            let x = Math.random() * bg.clientWidth;
+            let y = Math.random() * bg.clientHeight;
+            let w = Math.random() * 5 + 2;
+
+            let particle = document.createElement("div");
+            particle.classList.add('particles');
+            particle.style.width = w + 'px';
+            particle.style.height = w + 'px';
+            bg.appendChild(particle);
+
+            allp.push(particle);
+            allpPosition.push({ x: x, y: y });
+
+            // Base speed (no speedControl yet)
+            let baseSpeedX = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
+            let baseSpeedY = (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? -1 : 1);
+            randomDir.push({ dx: baseSpeedX, dy: baseSpeedY });
+        }
+
+        function createPgravity() {
+            if (!bg) return;
+
+            let x = Math.random() * bg.clientWidth;
+            let y = Math.random() * bg.clientHeight;
+            let w = Math.random() * 10 + 2;
+            let particle = document.createElement("div");
+            particle.classList.add('particles');
+            particle.style.width = w + 'px';
+            particle.style.height = w + 'px';
+            bg.appendChild(particle);
+            allp.push(particle);
+            allpPosition.push({ x: x, y: y });
+            allvelo.push(0.1);
+
+            let dirluck = Math.floor(Math.random() * 2);
+            if (dirluck == 1) {
+                dirval.push(-5);
+            } else {
+                dirval.push(5);
+            }
+        }
+
+        function applygravity() {
+            for (let i = 0; i < allvelo.length; i++) {
+                allpPosition[i].y += allvelo[i];
+                allpPosition[i].x += dirval[i];
+                allp[i].style.top = allpPosition[i].y + "px";
+                allp[i].style.left = allpPosition[i].x + "px";
+
+                // Collision
+                if (allpPosition[i].x <= 0) {
+                    dirval[i] = Math.abs(dirval[i]);
+                }
+                if (allpPosition[i].x >= bg.clientWidth) {
+                    dirval[i] = -dirval[i];
+                }
+
+                if (allpPosition[i].y >= bg.clientHeight) {
+                    allvelo[i] = -allvelo[i];
+                } else {
+                    allvelo[i] += g;
+                }
+            }
+        }
+
+        // Start the game loop if bg exists
+        if (bg) {
+            requestAnimationFrame(gameloop);
+        }
     </script>
 </body>
 
