@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-default">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" user-scalable="no">
+    <meta name="description" content="Anirban Roy - Portfolio Website">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <title>Gravitas</title>
+
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo-container">
+                <div class="logo"></div>
+                <h1>Gravitas</h1>
+            </div>
+            <div class="navs">
+                <button class="customize-btn"><i class="fa-solid fa-gear"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <canvas></canvas>
+
+    <!-- Customization Panel -->
+    <div class="customization-panel">
+        <div class="panel-header">
+            <h2>Simulation Settings</h2>
+            <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="control-group">
+            <label for="gravity-slider">Gravitational Constant (G):</label>
+            <div class="slider-container">
+                <input type="range" id="gravity-slider" min="0.5" max="10" step="0.1" value="0.5">
+                <span class="slider-value" id="gravity-value">0.5</span>
+            </div>
+            <p class="info-text">Adjust the strength of gravitational attraction between objects</p>
+        </div>
+    </div>
+
+    <!-- Overlay for panel -->
+    <div class="overlay"></div>
+
+    <script src="script.js">
+       
+    </script>
+</body>
+
+</html>
