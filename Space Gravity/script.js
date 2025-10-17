@@ -176,8 +176,8 @@ function create(event, fromClick) {
     const randomP = Math.floor(Math.random() * planetColors.length);
     const randomname = Math.floor(Math.random() * 5000);
 
-    const x = fromClick ? event.clientX : Math.random() * window.innerWidth;
-    const y = fromClick ? event.clientY : Math.random() * window.innerHeight;
+    const x = fromClick ? event.clientX : Math.random() * window.innerWidth - 20;
+    const y = fromClick ? event.clientY : Math.random() * window.innerHeight - 20;
 
     const random_size = Math.max(5, Math.floor(Math.random() * 20));
     const random_mass = (4 / 3) * Math.PI * Math.pow(random_size, 3) * density;
@@ -324,3 +324,4 @@ function gameloop() {
 
 requestAnimationFrame(gameloop);
 updateObjectCount();
+
